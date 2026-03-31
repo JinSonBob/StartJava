@@ -88,12 +88,12 @@ public class VariableNamesTheme {
         System.out.println("Окончание диапазона = " + endOfRange);
         
         // Имя работника месяца
-        String empOfTheMonthName = "Максим";
-        System.out.println("Имя работника месяца = " + empOfTheMonthName);
+        String empOfMonthName = "Максим";
+        System.out.println("Имя работника месяца = " + empOfMonthName);
         
         // Название электронной книги
-        String electronicBookName = "451 градус по фаренгейту";
-        System.out.println("Название Электронной книги = " + electronicBookName);
+        String ebookTitle = "451 градус по фаренгейту";
+        System.out.println("Название Электронной книги = " + ebookTitle);
                 
         // Size
         float size = 27.9f;
@@ -119,36 +119,36 @@ public class VariableNamesTheme {
         System.out.println("\n2.BOOLEAN-ПЕРЕМЕННЫЕ");
 
         // Сотни равны?
-        boolean isHundredsEqual = true;
-        System.out.println("Сотни равны? = " + isHundredsEqual);
+        boolean isEqualHundreds = true;
+        System.out.println("Сотни равны? = " + isEqualHundreds);
 
         // Компьютер включен?
-        boolean isComputerTurnedOn = true;
-        System.out.println("Компьютер включен? = " + isComputerTurnedOn);
+        boolean isActivePc = true;
+        System.out.println("Компьютер включен? = " + isActivePc);
         
         // Есть равные цифры?
         boolean hasEqualDigits = false;
         System.out.println("Есть равные цифры? = " + hasEqualDigits);
 
         // Служба создана?
-        boolean isServiceCreated = true;
-        System.out.println("Служба создана? = " + isServiceCreated);
+        boolean isCreatedService = true;
+        System.out.println("Служба создана? = " + isCreatedService);
         
         // Файл пустой?
-        boolean isFileEmpty = true;
-        System.out.println("Файл пустой? = " + isFileEmpty);
+        boolean isEmptyFile = true;
+        System.out.println("Файл пустой? = " + isEmptyFile);
         
         // Соединение активное?
-        boolean isConnectionActive = false;
-        System.out.println("Соединение активное? = " + isConnectionActive);
+        boolean isActiveConnection = false;
+        System.out.println("Соединение активное? = " + isActiveConnection);
         
         // Новый?
         boolean isNew = false;
         System.out.println("Новый? = " + isNew);
 
         // Электронная почта действительная?
-        boolean isEmailValid = true;
-        System.out.println("Электронная почта действительная? = " + isEmailValid);
+        boolean isValidEmail = true;
+        System.out.println("Электронная почта действительная? = " + isValidEmail);
 
         // Имеются уникальные строки?
         boolean hasUniqueStrings = true;
@@ -182,8 +182,8 @@ public class VariableNamesTheme {
         System.out.println("Новый идентификатор клиента = " + newClientId);
 
         // Количество символов в american standard code for information interchange
-        String charCountInAscfii = "charCountInAscfii";
+        String charCountInAscii = "charCountInAscii";
         System.out.println("Количество символов в " +
-                           "american standard code for information interchange = " + charCountInAscfii);
+                           "american standard code for information interchange = " + charCountInAscii);
     }
 }
