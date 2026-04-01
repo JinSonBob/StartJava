@@ -50,15 +50,15 @@ public class VariablesTheme {
 
         var penPriceBd = new BigDecimal("105.5");
         var bookPriceBd = new BigDecimal("235.23");
-        var discointBd = new BigDecimal("0.11");
+        var discountBd = new BigDecimal("0.11");
 
         var totalSumBd = penPriceBd.add(bookPriceBd).setScale(2, RoundingMode.HALF_UP);
-        var discountSumBd = totalSumBd.multiply(discointBd).setScale(2, RoundingMode.HALF_UP);
-        var totalCostBd = totalSumBd.subtract(discountSumBd).setScale(2, RoundingMode.HALF_UP);
+        var discountSumBd = totalSumBd.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
+        var discountPriceBd = totalSumBd.subtract(discountSumBd).setScale(2, RoundingMode.HALF_UP);
 
         System.out.println("Стоимость товаров без скидки = " + totalSumBd);
         System.out.println("Сумма скидки = " + discountSumBd);
-        System.out.println("Стоимость товаров со скидкой = " + totalCostBd);
+        System.out.println("Стоимость товаров со скидкой = " + discountPriceBd);
 
         // 3.ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ЯЧЕЕК В ТАБЛИЦЕ
         System.out.println("\n3.ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ЯЧЕЕК В ТАБЛИЦЕ");
@@ -79,7 +79,6 @@ public class VariablesTheme {
 
         // Метод: Арифметические операции
         System.out.println("\nМетод: Арифметические операции");
-        System.out.println("Исходные: First num = " + firstNum + ", Second num = " + secondNum);
 
         firstNum += secondNum;
         secondNum = firstNum - secondNum;
@@ -89,7 +88,6 @@ public class VariablesTheme {
         
         // Метод: побитовой операции ^
         System.out.println("\nМетод: побитовой операции ^");
-        System.out.println("Исходные: First num = " + firstNum + ", Second num = " + secondNum);
 
         firstNum ^= secondNum;
         secondNum ^= firstNum;
@@ -143,7 +141,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(temperature, (temperature++), (temperature--)));
+                """.formatted(temperature, (++temperature), (--temperature)));
 
         short pressure = Short.MAX_VALUE;
 
@@ -152,7 +150,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(pressure, (pressure++), (pressure++)));
+                """.formatted(pressure, (++pressure), (--pressure)));
 
         char statusCode = Character.MAX_VALUE;
 
@@ -161,7 +159,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted((int) statusCode, (int) (statusCode++), (int) (statusCode--)));
+                """.formatted((int) statusCode, (int) (++statusCode), (int) (--statusCode)));
 
         int traveledDistance = Integer.MAX_VALUE;
 
@@ -170,7 +168,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(traveledDistance, (traveledDistance++), (traveledDistance--)));
+                """.formatted(traveledDistance, (++traveledDistance), (--traveledDistance)));
 
         long timeSinceStart = Long.MAX_VALUE;
 
@@ -179,17 +177,18 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(timeSinceStart, (timeSinceStart++), (timeSinceStart--)));
+                """.formatted(timeSinceStart, (++timeSinceStart), (--timeSinceStart)));
 
         // 7.ВЫВОД ПАРАМЕТРОВ JVM И ОС
         System.out.println("\n7.ВЫВОД ПАРАМЕТРОВ JVM И ОС\n");
         
         var rt = Runtime.getRuntime();
         var availableProcessors = rt.availableProcessors();
-        var totalMemory = (rt.totalMemory()) / 1024 / 1024f;
-        var freeMemory = (rt.freeMemory()) / 1024 / 1024f;
+        float bytesInMegabyte = 1024 * 1024;
+        var totalMemory = (rt.totalMemory()) / bytesInMegabyte;
+        var freeMemory = (rt.freeMemory()) / bytesInMegabyte;
         var usedMemory = totalMemory - freeMemory;
-        var maxMemory = (rt.maxMemory()) / 1024 / 1024f;
+        var maxMemory = (rt.maxMemory()) / bytesInMegabyte;
 
         System.out.printf("""
                 Характеристики JVM:
