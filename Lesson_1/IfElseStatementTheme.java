@@ -31,23 +31,23 @@ public class IfElseStatementTheme {
         // 2.ПОИСК БОЛЬШЕГО ЧИСЛА ШАГОВ
         System.out.println("\n2.ПОИСК БОЛЬШЕГО ЧИСЛА ШАГОВ");
 
-        int stepsYesterday = 14574;
-        int stepsToday = 7985;
+        int yesterdaySteps = 14574;
+        int todaySteps = 7985;
 
-        System.out.println("Количество шагов вчера: " + stepsYesterday +
-                "\nКоличество шагов сегодня: " + stepsToday);
+        System.out.println("Количество шагов вчера: " + yesterdaySteps +
+                "\nКоличество шагов сегодня: " + todaySteps);
 
-        if (stepsToday > stepsYesterday) {
+        if (todaySteps > yesterdaySteps) {
             System.out.println("Сегодняшнее количество шагов больше вчерашнего");
-        } else if (stepsToday < stepsYesterday) {
+        } else if (todaySteps < yesterdaySteps) {
             System.out.println("Сегодняшнее количество шагов меньше вчерашнего");
         } else {
             System.out.println("Сегодняшнее количество шагов равно вчерашнему");
         }
 
-        float stepsAverage = (float) (stepsToday + stepsYesterday) / 2;
+        float averageSteps = (float) (todaySteps + yesterdaySteps) / 2;
 
-        System.out.println("Среднее количество шагов: " + stepsAverage);
+        System.out.println("Среднее количество шагов: " + averageSteps);
 
         // 3.ПРОВЕРКА КОЛИЧЕСТВА ГОСТЕЙ
         System.out.println("\n3.ПРОВЕРКА КОЛИЧЕСТВА ГОСТЕЙ");
@@ -107,21 +107,21 @@ public class IfElseStatementTheme {
         int pcSerialId = 169;
         String baseSerialIdText = String.valueOf(baseSerialId);
         String pcSerialIdText = String.valueOf(pcSerialId);
-        String tmp = "";
+        String currDigit = "";
         String overlap = "";
 
         if (baseSerialIdText.equals(pcSerialIdText)) {
             System.out.println("[№" + pcSerialIdText + "]: компьютер на 3-м этаже в кабинете 2");
         } else {
-            tmp = (pcSerialIdText.charAt(0) == baseSerialIdText.charAt(0))
+            currDigit = (pcSerialIdText.charAt(0) == baseSerialIdText.charAt(0))
                     ? pcSerialIdText.charAt(0) + "" : "_";
-            overlap += tmp;
-            tmp = (pcSerialIdText.charAt(1) == baseSerialIdText.charAt(1))
+            overlap += currDigit;
+            currDigit = (pcSerialIdText.charAt(1) == baseSerialIdText.charAt(1))
                     ? pcSerialIdText.charAt(1) + "" : "_";
-            overlap += tmp;
-            tmp = (pcSerialIdText.charAt(2) == baseSerialIdText.charAt(2))
+            overlap += currDigit;
+            currDigit = (pcSerialIdText.charAt(2) == baseSerialIdText.charAt(2))
                     ? pcSerialIdText.charAt(2) + "" : "_";
-            overlap += tmp;
+            overlap += currDigit;
 
             if (overlap.equals("___")) {
                 System.out.println("[№" + pcSerialId + "]: оборудование не идентифицировано");
