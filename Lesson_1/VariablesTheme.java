@@ -141,7 +141,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(temperature, (++temperature), (--temperature)));
+                """.formatted(temperature, ++temperature, --temperature));
 
         short pressure = Short.MAX_VALUE;
 
@@ -150,7 +150,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(pressure, (++pressure), (--pressure)));
+                """.formatted(pressure, ++pressure, --pressure));
 
         char statusCode = Character.MAX_VALUE;
 
@@ -159,7 +159,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted((int) statusCode, (int) (++statusCode), (int) (--statusCode)));
+                """.formatted((int) statusCode, (int) ++statusCode, (int) --statusCode));
 
         int traveledDistance = Integer.MAX_VALUE;
 
@@ -168,7 +168,7 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(traveledDistance, (++traveledDistance), (--traveledDistance)));
+                """.formatted(traveledDistance, ++traveledDistance, --traveledDistance));
 
         long timeSinceStart = Long.MAX_VALUE;
 
@@ -177,18 +177,18 @@ public class VariablesTheme {
                   Исходное: %d
                   +1: %d
                   -1: %d
-                """.formatted(timeSinceStart, (++timeSinceStart), (--timeSinceStart)));
+                """.formatted(timeSinceStart, ++timeSinceStart, --timeSinceStart));
 
         // 7.ВЫВОД ПАРАМЕТРОВ JVM И ОС
         System.out.println("\n7.ВЫВОД ПАРАМЕТРОВ JVM И ОС\n");
         
         var rt = Runtime.getRuntime();
         var availableProcessors = rt.availableProcessors();
-        float bytesInMegabyte = 1024 * 1024;
-        var totalMemory = (rt.totalMemory()) / bytesInMegabyte;
-        var freeMemory = (rt.freeMemory()) / bytesInMegabyte;
+        float bytesInMb = 1024 * 1024;
+        var totalMemory = (rt.totalMemory()) / bytesInMb;
+        var freeMemory = (rt.freeMemory()) / bytesInMb;
         var usedMemory = totalMemory - freeMemory;
-        var maxMemory = (rt.maxMemory()) / bytesInMegabyte;
+        var maxMemory = (rt.maxMemory()) / bytesInMb;
 
         System.out.printf("""
                 Характеристики JVM:
