@@ -5,8 +5,8 @@ public class Calculator {
     public static void main(String[] args) {
         var firstNum = BigDecimal.valueOf(100000);
         var secondNum = BigDecimal.valueOf(15);
-        char operation = '%';
-        var result = BigDecimal.valueOf(0);
+        char operation = '/';
+        var result = BigDecimal.ZERO;
 
         if (operation == '+') {
             result = firstNum.add(secondNum);
@@ -19,7 +19,7 @@ public class Calculator {
         } else if (operation == '%') {
             result = firstNum.remainder(secondNum);
         } else if (operation == '^') {
-            result = BigDecimal.valueOf(1);
+            result = BigDecimal.ONE;
             for (int i = 0; i < secondNum.intValue(); i++) {
                 result = result.multiply(firstNum);
             }

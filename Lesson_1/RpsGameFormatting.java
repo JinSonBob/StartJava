@@ -4,8 +4,8 @@ public class RpsGameFormatting {
     // Игра Камень-Ножницы-Бумага
     public static void main(String[] args) throws InterruptedException {
         String rock = "R";
-        String scissors = "P\uFE0F";
-        String paper = "S";
+        String scissors = "S";
+        String paper = "P";
 
         // Ход первого игрока
         String name1 = "HEL";
@@ -34,7 +34,7 @@ public class RpsGameFormatting {
 
         // Ход второго игрока
         String name2 = "WALLE";
-        int position2 = r.nextInt(1,100);
+        int position2 = r.nextInt(1, 100);
         String sign2 = rock;
 
         if (position2 > 66) {
