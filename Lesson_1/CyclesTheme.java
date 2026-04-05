@@ -7,11 +7,10 @@ public class CyclesTheme {
 
         System.out.printf("%-10s%-12s%s%n", "DECIMAL", "CHARACTER", "DESCRIPTION");
 
-        for (int i = 33; i < 48; i += 2) {
-            System.out.printf("%4d          %-13c%s%n", i, i, Character.getName(i));
-        }
-        for (int i = 98; i < 123; i += 2) {
-            System.out.printf("%4d          %-13c%s%n", i, i, Character.getName(i));
+        for (int i = 33; i <= 'z'; i += 1) {
+            if ((i < '0' && i % 2 != 0) || (i >= 'a' && i <= 'z' && i % 2 == 0)) {
+                System.out.printf("%4d          %-13c%s%n", i, i, Character.getName(i));
+            }
         }
 
         // 2.ВЫВОД ГЕОМЕТРИЧЕСКИХ ФИГУР
@@ -54,19 +53,10 @@ public class CyclesTheme {
         int startNum = 1;
         int endNum = 24;
         int perLineNum = 5;
-        int numCount = 0;
-
-        for (int i = startNum; i < endNum; i++) {
-            if (i % 2 != 0) numCount++;
-        }
-
-        if (numCount % perLineNum != 0) {
-            numCount += perLineNum - (numCount % perLineNum);
-        }
 
         int currNum = startNum % 2 == 0 ? startNum + 1 : startNum;
 
-        for (int i = 1; i <= numCount; i++) {
+        for (int i = 1; currNum < endNum || i % perLineNum != 1; i++) {
             if (currNum < endNum) {
                 System.out.printf("%3d", currNum);
                 currNum += 2;
