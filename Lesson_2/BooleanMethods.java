@@ -11,7 +11,7 @@ public class BooleanMethods {
         return true;
     }
 
-    public boolean isEnterLetter() {
+    public boolean isEnteredLetter() {
         System.out.print("\n" + Methods.getCurrentMethodName() +
                 "() -> пользователь ввел букву?: ");
         return false;

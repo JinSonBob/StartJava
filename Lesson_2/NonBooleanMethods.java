@@ -1,78 +1,71 @@
 public class NonBooleanMethods {
-    public String findLongestWord() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> Самое длинное слово в предложении из книги по Java: ");
-        return "Какое-то слово";
+    public void findLongestWord() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> найдено самое длинное слово в предложении из книги по Java");
     }
 
     public void chooseMenuOption() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> выбран пункт меню в текстовом редакторе на macOS");
     }
 
-    public float calculateAverageMark() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> среднее значение оценок в школе №1234: ");
-        return 3.78f;
+    public void calculateAverageMark() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> вычисленно среднее значение оценок в школе №1234");
     }
 
-    public int countUniqueWords() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> количество уникальных слов в \"Война и Мир\": ");
-        return 16278;
+    public void countUniqueWords() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> подсчитано количество уникальных слов в \"Война и Мир\"");
     }
 
-    public String printErrorMessage() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> сообщение об ошибке: ");
-        return "Ошибка: нехватка памяти";
+    public void printErrorMessage() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> выведено сообщение об ошибке");
     }
 
     public void syncCloudData() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> данные синхронизированы с облачным хранилищем");
     }
 
     public void restoreBackup() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> восстановлены данные из резервной копии от 11.03.2024");
     }
 
     public void pauseDownload() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> приостановлена загрузка mp3-файла группы \"Ария\"");
     }
 
-    public void factoryReset() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+    public void resetSettings() {
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> сброшены настройки до заводских для пылесоса Mi");
     }
 
     public void writeToFile() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> записано содержимое в файл по указанному пути на флешку");
     }
 
-    public float convertTemperature() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> преобразована температура из Цельсия в Фаренгейт: ");
-        return 451f;
+    public void convertTemperature() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> преобразована температура из Цельсия в Фаренгейт");
     }
 
     public void inputMathExpression() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
+        System.out.println(Methods.getCurrentMethodName() +
                 "() -> введено математическое выражение с тремя аргументами");
     }
 
-    public String chooseWinner() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> выявлен победитель среди гонщиков игры \"Need For Speed\": ");
-        return "Какой-то такой";
+    public void chooseWinner() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> выявлен победитель среди гонщиков игры \"Need For Speed\"");
     }
 
-    public String findBookByAuthor() {
-        System.out.print("\n" + Methods.getCurrentMethodName() +
-                "() -> найдена книгу по имени писателя: ");
-        return "Какая-то такая";
+    public void findBookByAuthor() {
+        System.out.println(Methods.getCurrentMethodName() +
+                "() -> найдена книга по имени писателя");
     }
 }
