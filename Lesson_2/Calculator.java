@@ -1,15 +1,15 @@
 public class Calculator {
-    private float firstNum;
-    private float secondNum;
+    private long firstNum;
+    private long secondNum;
     private char operator;
-    private float result;
+    private double result;
 
-    public void setFirstNum(float firstNum) {
-        this.firstNum = (float) firstNum;
+    public void setFirstNum(long firstNum) {
+        this.firstNum = firstNum;
     }
 
-    public void setSecondNum(float secondNum) {
-        this.secondNum = (float) secondNum;
+    public void setSecondNum(long secondNum) {
+        this.secondNum = secondNum;
     }
 
     public void setOperator(char operator) {
@@ -28,7 +28,7 @@ public class Calculator {
         }
     }
 
-    public float calculate() {
+    public double calculate() {
         switch (operator) {
             case '+':
                 result = firstNum + secondNum;
@@ -41,25 +41,25 @@ public class Calculator {
                 break;
             case '/':
                 if (secondNum != 0) {
-                    result = firstNum / secondNum;
+                    result = (double) firstNum / secondNum;
                 } else {
-                    result = 0f;
+                    result = 0;
                     System.out.println("Ошибка: деление на ноль запрещено");
                 }
                 break;
             case '^':
-                result = (float) Math.pow(firstNum, secondNum);
+                result = Math.pow(firstNum, secondNum);
                 break;
             case '%':
                 if (secondNum != 0) {
                     result = firstNum % secondNum;
                 } else {
-                    result = 0f;
+                    result = 0;
                     System.out.println("Ошибка: деление по модулю на ноль");
                 }
                 break;
             default:
-                result = 0f;
+                result = 0;
         }
         return result;
     }
