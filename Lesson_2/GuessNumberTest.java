@@ -4,36 +4,24 @@ public class GuessNumberTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Player firstPlayer = new Player();
         System.out.print("Введите имя первого игрока: ");
-        firstPlayer.setName(scanner.nextLine());
+        Player firstPlayer = new Player(scanner.nextLine());
 
-        Player secondPlayer = new Player();
         System.out.print("Введите имя второго игрока: ");
-        secondPlayer.setName(scanner.nextLine());
+        Player secondPlayer = new Player(scanner.nextLine());
         
-        boolean isContinue = true;
-        while (isContinue) {
-            GuessNumber main = new GuessNumber();
-            main.startGame(firstPlayer.getName(), secondPlayer.getName());
+        String input = "yes";
 
-            boolean isValidInput = false;
+        while (input.equals("yes")) {
+            GuessNumber game = new GuessNumber(firstPlayer, secondPlayer);
+            game.start();
 
-            while (!isValidInput) {
-                System.out.print("\nХотите продолжить игру? [yes/no]: ");
+            System.out.print("Хотите продолжить игру? [yes/no]: ");
+            input = scanner.next();
 
-                switch (scanner.next()) {
-                    case "no":
-                        isContinue = false;
-                        isValidInput = true;
-                        break;
-                    case "yes":
-                        isContinue = true;
-                        isValidInput = true;
-                        break;
-                    default:
-                        System.out.println("Ошибка: неправильный ввод");
-                }
+            while (!input.equals("no") && !input.equals("yes")) {
+                System.out.println("Ошибка: неправильный ввод. Введите [yes/no]: ");
+                input = scanner.next();
             }
         }
     }

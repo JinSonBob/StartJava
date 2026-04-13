@@ -2,39 +2,45 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    private int firstPlayerNum;
-    private int secondPlayerNum;
+    private Player firstPlayer;
+    private Player secondPlayer;
     private int pcNum;
     private Scanner scanner = new Scanner(System.in);
+    
+    public GuessNumber(Player firstPlayer, Player secondPlayer) {
+        this.firstPlayer = firstPlayer;
+        this.secondPlayer = secondPlayer;
+    }
 
-    public void startGame(String firstPlayerName, String secondPlayerName) {
+    public void start() {
         pcNum = new Random().nextInt(1, 101);
         System.out.println("(Подсказка " + pcNum + ")");
+
+        Player currPlayer = firstPlayer;
+        Player nextPlayer = secondPlayer;
+
         boolean isGuessed = false;
-        String tmpName;
 
         while (!isGuessed) {
-            boolean isValidInput = false;
+            System.out.printf("%s, введите число от 1 до 100: ", currPlayer.getName());
+            int input = scanner.nextInt();
 
-            while (!isValidInput) {
-                System.out.printf("%s, введите число от 1 до 100: ", firstPlayerName);
-                firstPlayerNum = scanner.nextInt();
-
-                if (firstPlayerNum >= 1 && firstPlayerNum <= 100) {
-                    isValidInput = true;
-                } else {
-                    System.out.println("Неверный ввод! введите число от 1 до 100");
-                }
+            while (input < 1 || input > 100) {
+                System.out.print("Неверный ввод! введите число от 1 до 100: ");
+                input = scanner.nextInt();
             }
 
-            if (firstPlayerNum == pcNum) {
-                System.out.printf("Игрок %s победил!", firstPlayerName);
+            currPlayer.setNumber(input);
+
+            if (currPlayer.getNumber() == pcNum) {
+                System.out.printf("Игрок %s победил!", currPlayer.getName());
                 isGuessed = true;
             } else {
-                System.out.printf("Неверно, ход переходит игроку %s%n", secondPlayerName);
-                tmpName = firstPlayerName;
-                firstPlayerName = secondPlayerName;
-                secondPlayerName = tmpName;
+                System.out.printf("Неверно, ход переходит игроку %s%n", nextPlayer.getName());
+
+                Player tmpPlayer = currPlayer;
+                currPlayer = nextPlayer;
+                nextPlayer = tmpPlayer;
             }
         }
     }
