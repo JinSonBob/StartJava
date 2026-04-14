@@ -4,9 +4,9 @@ public class CalculatorTest {
     public static void main(String[] args) {
         Calculator calc = new Calculator();
         Scanner scanner = new Scanner(System.in);
-        String input = "yes";
+        String answer = "yes";
 
-        while (input.equals("yes")) {
+        while (answer.equals("yes")) {
             System.out.print("Введите первое число: ");
             calc.setFirstNum(scanner.nextLong());
             System.out.print("Введите знак операции (+, -, *, /, ^, %): ");
@@ -16,12 +16,15 @@ public class CalculatorTest {
 
             System.out.printf("Результат: %f%n", calc.calculate());
 
-            System.out.print("Хотите продолжить вычисления? [yes/no]: ");
-            input = scanner.next();
+            answer = "";
 
-            while (!input.equals("no") && !input.equals("yes")) {
-                System.out.println("Ошибка: неправильный ввод. Введите [yes/no]: ");
-                input = scanner.next();
+            while (!answer.equals("no") && !answer.equals("yes")) {
+                System.out.print("Хотите продолжить вычисления? [yes/no]: ");
+                answer = scanner.next();
+                
+                if (!answer.equals("no") && !answer.equals("yes")) {
+                    System.out.println("Ошибка: неправильный ввод");
+                }
             }
         }
     }

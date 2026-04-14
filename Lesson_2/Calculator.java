@@ -2,7 +2,6 @@ public class Calculator {
     private long firstNum;
     private long secondNum;
     private char operator;
-    private double result;
 
     public void setFirstNum(long firstNum) {
         this.firstNum = firstNum;
@@ -31,36 +30,29 @@ public class Calculator {
     public double calculate() {
         switch (operator) {
             case '+':
-                result = firstNum + secondNum;
-                break;
+                return firstNum + secondNum;
             case '-':
-                result = firstNum - secondNum;
-                break;
+                return firstNum - secondNum;
             case '*':
-                result = firstNum * secondNum;
-                break;
+                return firstNum * secondNum;
             case '/':
                 if (secondNum != 0) {
-                    result = (double) firstNum / secondNum;
+                    return (double) firstNum / secondNum;
                 } else {
-                    result = 0;
                     System.out.println("Ошибка: деление на ноль запрещено");
+                    return 0;
                 }
-                break;
             case '^':
-                result = Math.pow(firstNum, secondNum);
-                break;
+                return Math.pow(firstNum, secondNum);
             case '%':
                 if (secondNum != 0) {
-                    result = firstNum % secondNum;
+                    return firstNum % secondNum;
                 } else {
-                    result = 0;
                     System.out.println("Ошибка: деление по модулю на ноль");
+                    return 0;
                 }
-                break;
             default:
-                result = 0;
+                return 0;
         }
-        return result;
     }
 }
