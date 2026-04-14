@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class GuessNumber {
     private Player firstPlayer;
     private Player secondPlayer;
-    private int pcNum;
-    private Scanner scanner = new Scanner(System.in);
+    private int hiddenNum;
     
     public GuessNumber(Player firstPlayer, Player secondPlayer) {
         this.firstPlayer = firstPlayer;
@@ -13,34 +12,29 @@ public class GuessNumber {
     }
 
     public void start() {
-        pcNum = new Random().nextInt(1, 101);
-        System.out.println("(Подсказка " + pcNum + ")");
+        hiddenNum = new Random().nextInt(1, 101);
+        System.out.println("(Подсказка " + hiddenNum + ")");
 
         Player currPlayer = firstPlayer;
-        Player nextPlayer = secondPlayer;
+        Scanner scanner = new Scanner(System.in);
 
-        boolean isGuessed = false;
-
-        while (!isGuessed) {
+        while (currPlayer.getNumber() != hiddenNum) {
             System.out.printf("%s, введите число от 1 до 100: ", currPlayer.getName());
-            int input = scanner.nextInt();
+            int answer = scanner.nextInt();
 
-            while (input < 1 || input > 100) {
+            while (answer < 1 || answer > 100) {
                 System.out.print("Неверный ввод! введите число от 1 до 100: ");
-                input = scanner.nextInt();
+                answer = scanner.nextInt();
             }
 
-            currPlayer.setNumber(input);
+            currPlayer.setNumber(answer);
 
-            if (currPlayer.getNumber() == pcNum) {
-                System.out.printf("Игрок %s победил!", currPlayer.getName());
-                isGuessed = true;
+            if (currPlayer.getNumber() == hiddenNum) {
+                System.out.printf("Игрок %s победил!%n", currPlayer.getName());
             } else {
-                System.out.printf("Неверно, ход переходит игроку %s%n", nextPlayer.getName());
+                System.out.printf("Неверно, ход переходит другому игроку%n");
 
-                Player tmpPlayer = currPlayer;
-                currPlayer = nextPlayer;
-                nextPlayer = tmpPlayer;
+                currPlayer = (currPlayer == firstPlayer) ? secondPlayer : firstPlayer;
             }
         }
     }

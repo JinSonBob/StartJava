@@ -4,6 +4,7 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.number = 101;
     }
 
     public void setNumber(int number) {

@@ -10,18 +10,21 @@ public class GuessNumberTest {
         System.out.print("Введите имя второго игрока: ");
         Player secondPlayer = new Player(scanner.nextLine());
         
-        String input = "yes";
+        String answer = "yes";
 
-        while (input.equals("yes")) {
+        while (answer.equals("yes")) {
             GuessNumber game = new GuessNumber(firstPlayer, secondPlayer);
             game.start();
 
-            System.out.print("Хотите продолжить игру? [yes/no]: ");
-            input = scanner.next();
+            answer = "";
 
-            while (!input.equals("no") && !input.equals("yes")) {
-                System.out.println("Ошибка: неправильный ввод. Введите [yes/no]: ");
-                input = scanner.next();
+            while (!answer.equals("no") && !answer.equals("yes")) {
+                System.out.print("Хотите продолжить игру? [yes/no]: ");
+                answer = scanner.next();
+
+                if (!answer.equals("no") && !answer.equals("yes")) {
+                    System.out.println("Ошибка: неправильный ввод");
+                }
             }
         }
     }
