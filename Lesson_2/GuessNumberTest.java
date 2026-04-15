@@ -16,16 +16,18 @@ public class GuessNumberTest {
             GuessNumber game = new GuessNumber(firstPlayer, secondPlayer);
             game.start();
 
-            answer = "";
-
-            while (!answer.equals("no") && !answer.equals("yes")) {
-                System.out.print("Хотите продолжить игру? [yes/no]: ");
-                answer = scanner.next();
-
-                if (!answer.equals("no") && !answer.equals("yes")) {
-                    System.out.println("Ошибка: неправильный ввод");
-                }
-            }
+            answer = checkAnswer(scanner);
         }
+    }
+
+    private static String checkAnswer(Scanner scanner) {
+        String answer;
+        
+        do {
+            System.out.print("Хотите продолжить игру? [yes/no]: ");
+            answer = scanner.next();
+        } while (!answer.equals("no") && !answer.equals("yes"));
+
+        return answer;
     }
 }

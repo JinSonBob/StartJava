@@ -4,7 +4,10 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.number = 101;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     public void setNumber(int number) {
@@ -13,9 +16,5 @@ public class Player {
 
     public int getNumber() {
         return number;
-    }
-
-    public String getName() {
-        return name;
     }
 }
