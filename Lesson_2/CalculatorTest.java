@@ -16,16 +16,18 @@ public class CalculatorTest {
 
             System.out.printf("Результат: %f%n", calc.calculate());
 
-            answer = "";
-
-            while (!answer.equals("no") && !answer.equals("yes")) {
-                System.out.print("Хотите продолжить вычисления? [yes/no]: ");
-                answer = scanner.next();
-                
-                if (!answer.equals("no") && !answer.equals("yes")) {
-                    System.out.println("Ошибка: неправильный ввод");
-                }
-            }
+            answer = checkAnswer(scanner);
         }
+    }
+
+    private static String checkAnswer(Scanner scanner) {
+        String answer;
+
+        do {
+            System.out.print("Хотите продолжить вычисления? [yes/no]: ");
+            answer = scanner.next();
+        } while (!answer.equals("no") && !answer.equals("yes"));
+
+        return answer;
     }
 }
