@@ -18,12 +18,12 @@ public class GuessNumber {
         Player currPlayer = firstPlayer;
         Scanner scanner = new Scanner(System.in);
 
-        while (currPlayer.getNumber() != hiddenNum) {
+        while (true) {
             currPlayer.setNumber(inputNum(scanner, currPlayer));
 
             if (checkWinNum(currPlayer)) break;
 
-            currPlayer = (currPlayer == firstPlayer) ? secondPlayer : firstPlayer;
+            currPlayer = swapPlayer(currPlayer);
         }
     }
 
@@ -39,13 +39,19 @@ public class GuessNumber {
     }
 
     private boolean checkWinNum(Player currPlayer) {
-        if (currPlayer.getNumber() == hiddenNum) {
+        int playerNum = currPlayer.getNumber();
+
+        if (playerNum == hiddenNum) {
             System.out.printf("Игрок %s победил!%n", currPlayer.getName());
             return true;
         }
         System.out.printf("%d %s того, что загадал компьютер%n",
-                currPlayer.getNumber(),
-                (currPlayer.getNumber() > hiddenNum) ? "больше" : "меньше");
+                playerNum,
+                (playerNum > hiddenNum) ? "больше" : "меньше");
         return false;
+    }
+
+    private Player swapPlayer(Player currPlayer) {
+        return (currPlayer == firstPlayer) ? secondPlayer : firstPlayer;
     }
 }
