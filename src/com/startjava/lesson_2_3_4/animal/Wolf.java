@@ -1,4 +1,4 @@
-package com.startjava.lesson_2_3.animal;
+package com.startjava.lesson_2_3_4.animal;
 
 public class Wolf {
     private String sex;
@@ -50,7 +50,7 @@ public class Wolf {
     public String getFurColor() {
         return furColor;
     }
-    
+
     public void walk() {
         System.out.println("Прошёл 1 метр");
     }
