@@ -35,20 +35,24 @@ public class Factorial {
                 return;
             }
 
-            StringBuilder expression = new StringBuilder("1");
-
-            long result = 1;
-
-            for (int i = 2; i <= arg; i++) {
-                result *= i;
-                expression.append(" * ").append(i);
-            }
-
-            StringBuilder output = new StringBuilder().append(arg);
-
-            System.out.println(arg <= 1
-                    ? output.append("! = 1")
-                    : output.append("! = ").append(expression).append(" = ").append(result));
+            System.out.println(buildExpression(arg));
         }
+    }
+
+    private static StringBuilder buildExpression(int arg) {
+        StringBuilder expression = new StringBuilder("1");
+
+        long result = 1;
+
+        for (int i = 2; i <= arg; i++) {
+            result *= i;
+            expression.append(" * ").append(i);
+        }
+
+        StringBuilder output = new StringBuilder().append(arg);
+
+        return arg <= 1
+                ? output.append("! = 1")
+                : output.append("! = ").append(expression).append(" = ").append(result);
     }
 }
