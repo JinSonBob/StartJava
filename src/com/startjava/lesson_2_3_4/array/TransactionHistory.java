@@ -5,27 +5,40 @@ import java.util.Arrays;
 public class TransactionHistory {
     static void main() {
         printTransactions(new int[]{});
+        printReverseTransactions(new int[]{});
         printTransactions(null);
+        printReverseTransactions(null);
         printTransactions(new int[]{5});
+        printReverseTransactions(new int[]{5});
         printTransactions(new int[]{6, 8, 9, 1});
+        printReverseTransactions(new int[]{6, 8, 9, 1});
         printTransactions(new int[]{13, 8, 5, 3, 2, 1, 1});
+        printReverseTransactions(new int[]{13, 8, 5, 3, 2, 1, 1});
     }
 
     private static void printTransactions(int[] transactions) {
+        if (checkTransactions(transactions)) {
+            System.out.println("\nИсходные транзакции: " + Arrays.toString(transactions));
+        }
+    }
+
+    private static void printReverseTransactions(int[] transactions) {
+        if (checkTransactions(transactions)) {
+            System.out.println(" В обратном порядке: " + Arrays.toString(reverseTransactions(transactions)));
+        }
+    }
+
+    private static boolean checkTransactions(int[] transactions) {
         if (transactions == null) {
             System.out.println("Ошибка данных: данные типа null");
-            return;
+            return false;
         }
 
-        int arrLength = transactions.length;
-
-        if (arrLength == 0) {
+        if (transactions.length == 0) {
             System.out.println("Нет истории транзакций: длина массива = 0");
-            return;
+            return false;
         }
-
-        System.out.println("\nИсходные транзакции: " + Arrays.toString(transactions));
-        System.out.println(" В обратном порядке: " + Arrays.toString(reverseTransactions(transactions)));
+        return true;
     }
 
     private static int[] reverseTransactions(int[] transactions) {
