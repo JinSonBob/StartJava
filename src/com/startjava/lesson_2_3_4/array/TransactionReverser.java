@@ -4,35 +4,42 @@ import java.util.Arrays;
 
 public class TransactionReverser {
     static void main() {
-        int[] transactions1 = new int[]{};
-        if (isValidTransactions(transactions1)) {
-            int[] reversedTransactions1 = reverse(transactions1);
-            printTransactions(transactions1, reversedTransactions1);
-        }
+        int[] transactions = {};
+        int[] reversedTransactions = reverse(transactions);
+        printTransactions(transactions, reversedTransactions);
+        System.out.println();
 
-        int[] transactions2 = null;
-        if (isValidTransactions(transactions2)) {
-            int[] reversedTransactions2 = reverse(transactions2);
-            printTransactions(transactions2, reversedTransactions2);
-        }
+        transactions = null;
+        reversedTransactions = reverse(transactions);
+        printTransactions(transactions, reversedTransactions);
+        System.out.println();
 
-        int[] transactions3 = new int[]{5};
-        if (isValidTransactions(transactions3)) {
-            int[] reversedTransactions3 = reverse(transactions3);
-            printTransactions(transactions3, reversedTransactions3);
-        }
+        transactions = new int[]{5};
+        reversedTransactions = reverse(transactions);
+        printTransactions(transactions, reversedTransactions);
+        System.out.println();
 
-        int[] transactions4 = new int[]{6, 8, 9, 1};
-        if (isValidTransactions(transactions4)) {
-            int[] reversedTransactions4 = reverse(transactions4);
-            printTransactions(transactions4, reversedTransactions4);
-        }
+        transactions = new int[]{6, 8, 9, 1};
+        reversedTransactions = reverse(transactions);
+        printTransactions(transactions, reversedTransactions);
+        System.out.println();
 
-        int[] transactions5 = new int[]{13, 8, 5, 3, 2, 1, 1};
-        if (isValidTransactions(transactions5)) {
-            int[] reversedTransactions5 = reverse(transactions5);
-            printTransactions(transactions5, reversedTransactions5);
+        transactions = new int[]{13, 8, 5, 3, 2, 1, 1};
+        reversedTransactions = reverse(transactions);
+        printTransactions(transactions, reversedTransactions);
+        System.out.println();
+    }
+
+    private static int[] reverse(int[] transactions) {
+        if (!isValidTransactions(transactions)) return null;
+
+        int length = transactions.length;
+        int[] reversedTransactions = new int[length];
+
+        for (int transaction : transactions) {
+            reversedTransactions[--length] = transaction;
         }
+        return reversedTransactions;
     }
 
     private static boolean isValidTransactions(int[] transactions) {
@@ -48,20 +55,14 @@ public class TransactionReverser {
         return true;
     }
 
-    private static int[] reverse(int[] transactions) {
-        int length = transactions.length;
-        int[] reversedTransactions = new int[length];
-
-        for (int transaction : transactions) {
-            reversedTransactions[--length] = transaction;
+    private static void printTransactions(int[] originalTransactions, int[] reversedTransactions) {
+        if (originalTransactions == null || reversedTransactions == null) {
+            return;
         }
-        return reversedTransactions;
-    }
 
-    private static void printTransactions(int[] transactions, int[] reversedTransactions) {
         System.out.printf("""
                 Исходные транзакции: %s
                  В обратном порядке: %s
-                """, Arrays.toString(transactions), Arrays.toString(reversedTransactions));
+                """, Arrays.toString(originalTransactions), Arrays.toString(reversedTransactions));
     }
 }
