@@ -56,9 +56,7 @@ public class TransactionReverser {
     }
 
     private static void printTransactions(int[] originalTransactions, int[] reversedTransactions) {
-        if (originalTransactions == null || reversedTransactions == null) {
-            return;
-        }
+        if (originalTransactions == null || reversedTransactions == null) return;
 
         System.out.printf("""
                 Исходные транзакции: %s
