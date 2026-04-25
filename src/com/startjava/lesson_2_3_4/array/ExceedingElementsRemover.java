@@ -5,37 +5,37 @@ import java.util.Random;
 
 public class ExceedingElementsRemover {
     static void main() {
-        float[] originalArray = fillArray();
-        float[] processedArray;
+        float[] nums = fill();
+        float[] filteredNums;
         int[] indices = new int[]{-1, 15, 0, 14};
 
-        for (int index : indices) {
-            processedArray = removeExceeding(originalArray, index);
-            printResult(originalArray, processedArray, index);
+        for (int targetIndex : indices) {
+            filteredNums = removeExceeding(nums, targetIndex);
+            printComparison(nums, filteredNums, targetIndex);
             System.out.println();
         }
     }
 
-    private static float[] fillArray() {
+    private static float[] fill() {
         Random random = new Random();
-        float[] array = new float[15];
+        float[] nums = new float[15];
 
-        for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextFloat();
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = random.nextFloat();
         }
-        return array;
+        return nums;
     }
 
-    private static float[] removeExceeding(float[] array, int minNumIndex) {
-        if (!isValidIndex(minNumIndex)) return null;
+    private static float[] removeExceeding(float[] nums, int targetIndex) {
+        if (!isValidIndex(targetIndex)) return null;
 
-        float[] arrayCopy = Arrays.copyOf(array, array.length);
-        float minNum = array[minNumIndex];
+        float[] filteredNums = Arrays.copyOf(nums, nums.length);
+        float targetNum = nums[targetIndex];
 
-        for (int i = 0; i < arrayCopy.length; i++) {
-            if (arrayCopy[i] > minNum) arrayCopy[i] = 0f;
+        for (int i = 0; i < filteredNums.length; i++) {
+            if (filteredNums[i] > targetNum) filteredNums[i] = 0f;
         }
-        return arrayCopy;
+        return filteredNums;
     }
 
     private static boolean isValidIndex(int index) {
@@ -47,21 +47,22 @@ public class ExceedingElementsRemover {
         return true;
     }
 
-    private static void printResult(float[] originalArray, float[] processedArray, int index) {
-        if (originalArray == null || processedArray == null) return;
+    private static void printComparison(float[] nums, float[] filteredNums, int targetIndex) {
+        if (nums == null || filteredNums == null) return;
 
         System.out.println("\nИсходный массив: ");
-        printInRows(originalArray);
+        printInRows(nums);
 
         System.out.println("\nИзменённый массив: ");
-        printInRows(processedArray);
+        printInRows(filteredNums);
 
-        System.out.printf("%nЗначение ячейки по переданному индексу %d: %.3f", index, originalArray[index]);
+        System.out.printf("%nЗначение ячейки по переданному индексу %d: %.3f",
+                targetIndex, nums[targetIndex]);
     }
 
-    private static void printInRows(float[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.printf("%.3f ", array[i]);
+    private static void printInRows(float[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            System.out.printf("%.3f ", nums[i]);
             if (i == 7) System.out.println();
         }
     }
