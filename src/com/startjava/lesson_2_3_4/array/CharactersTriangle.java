@@ -2,18 +2,29 @@ package com.startjava.lesson_2_3_4.array;
 
 public class CharactersTriangle {
     static void main() {
-        printTriangle('0', '9', true);
-        printTriangle('/', '!', false);
-        printTriangle('A', 'J', false);
+        String[] triangleRows = fillArrayWithTriangleRows('0', '9', true);
+        printTriangle(triangleRows);
+
+        triangleRows = fillArrayWithTriangleRows('/', '!', false);
+        printTriangle(triangleRows);
+
+        triangleRows = fillArrayWithTriangleRows('A', 'J', false);
+        printTriangle(triangleRows);
     }
 
-    public static void printTriangle(char leftBorder, char rightBorder, boolean direction) {
-        if (!isValidBorders(leftBorder, rightBorder)) return;
+    public static String[] fillArrayWithTriangleRows(char leftBorder, char rightBorder, boolean isAscending) {
+        if (!isValidBorders(leftBorder, rightBorder)) return null;
 
         int height = rightBorder - leftBorder + 1;
+        String[] triangleRows = new String[height];
+        char currChar = isAscending ? leftBorder : rightBorder;
 
-        if (direction) System.out.println(buildTriangle(leftBorder, height, direction));
-        else System.out.println(buildTriangle(rightBorder, height, direction));
+        for (int i = 0; i < height; i++) {
+            triangleRows[i] = buildTriangleRow(currChar, i, height);
+            if (isAscending) currChar++;
+            else currChar--;
+        }
+        return triangleRows;
     }
 
     public static boolean isValidBorders(char leftBorder, char rightBorder) {
@@ -25,20 +36,22 @@ public class CharactersTriangle {
         return true;
     }
 
-    public static StringBuilder buildTriangle(char firstChar, int height, boolean direction) {
-        StringBuilder triangle = new StringBuilder().append("\n");
+    public static String buildTriangleRow(char rowChar, int rowIndex, int height) {
+        StringBuilder triangleRow = new StringBuilder();
 
-        for (int i = 0; i < height; i++) {
-            String charRepeat = String.valueOf(firstChar);
+        triangleRow.append(" ".repeat(height - 1 - rowIndex));
+        triangleRow.append(String.valueOf(rowChar).repeat(rowIndex * 2 + 1));
 
-            triangle.append(" ".repeat(height - 1 - i));
-            triangle.append(charRepeat.repeat(i * 2 + 1));
-            triangle.append("\n");
+        return triangleRow.toString();
+    }
 
-            if (direction) firstChar++;
-            else firstChar--;
+    public static void printTriangle(String[] triangleRows) {
+        if (triangleRows == null) return;
+
+        System.out.println();
+        for (String row : triangleRows) {
+            System.out.println(row);
         }
-
-        return triangle;
+        System.out.println();
     }
 }
