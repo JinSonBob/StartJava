@@ -5,18 +5,17 @@ import java.util.Random;
 
 public class ExceedingElementsRemover {
     static void main() {
-        float[] nums = fill();
-        float[] filteredNums;
-        int[] indices = new int[]{-1, 15, 0, 14};
+        int[] indices = {-1, 15, 0, 14};
 
-        for (int targetIndex : indices) {
-            filteredNums = removeExceeding(nums, targetIndex);
-            printComparison(nums, filteredNums, targetIndex);
+        for (int thresholdIndex : indices) {
+            float[] originalNums = fillWithRandomFloats();
+            float[] filteredNums = resetValuesAboveThreshold(originalNums, thresholdIndex);
+            printArraysWithThresholdValue(originalNums, filteredNums, thresholdIndex);
             System.out.println();
         }
     }
 
-    private static float[] fill() {
+    private static float[] fillWithRandomFloats() {
         Random random = new Random();
         float[] nums = new float[15];
 
@@ -26,14 +25,14 @@ public class ExceedingElementsRemover {
         return nums;
     }
 
-    private static float[] removeExceeding(float[] nums, int targetIndex) {
-        if (!isValidIndex(targetIndex)) return null;
+    private static float[] resetValuesAboveThreshold(float[] originalNums, int thresholdIndex) {
+        if (!isValidIndex(thresholdIndex)) return null;
 
-        float[] filteredNums = Arrays.copyOf(nums, nums.length);
-        float targetNum = nums[targetIndex];
+        float[] filteredNums = Arrays.copyOf(originalNums, originalNums.length);
+        float thresholdNum = originalNums[thresholdIndex];
 
         for (int i = 0; i < filteredNums.length; i++) {
-            if (filteredNums[i] > targetNum) filteredNums[i] = 0f;
+            if (filteredNums[i] > thresholdNum) filteredNums[i] = 0f;
         }
         return filteredNums;
     }
@@ -47,17 +46,18 @@ public class ExceedingElementsRemover {
         return true;
     }
 
-    private static void printComparison(float[] nums, float[] filteredNums, int targetIndex) {
-        if (nums == null || filteredNums == null) return;
+    private static void printArraysWithThresholdValue(float[] originalNums,
+                                                      float[] filteredNums, int thresholdIndex) {
+        if (originalNums == null || filteredNums == null) return;
 
         System.out.println("\nИсходный массив: ");
-        printInRows(nums);
+        printInRows(originalNums);
 
         System.out.println("\nИзменённый массив: ");
         printInRows(filteredNums);
 
         System.out.printf("%nЗначение ячейки по переданному индексу %d: %.3f",
-                targetIndex, nums[targetIndex]);
+                thresholdIndex, originalNums[thresholdIndex]);
     }
 
     private static void printInRows(float[] nums) {
