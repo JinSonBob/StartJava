@@ -2,32 +2,33 @@ package com.startjava.lesson_2_3_4.array;
 
 public class CharactersTriangle {
     static void main() {
-        String[] triangleRows = fillArrayWithTriangleRows('0', '9', true);
-        printTriangle(triangleRows);
+        char[] triangleChars = fillChars('0', '9', true);
+        String triangle = buildTriangle(triangleChars);
+        printTriangle(triangle);
 
-        triangleRows = fillArrayWithTriangleRows('/', '!', false);
-        printTriangle(triangleRows);
+        triangleChars = fillChars('/', '!', false);
+        triangle = buildTriangle(triangleChars);
+        printTriangle(triangle);
 
-        triangleRows = fillArrayWithTriangleRows('A', 'J', false);
-        printTriangle(triangleRows);
+        triangleChars = fillChars('A', 'J', false);
+        triangle = buildTriangle(triangleChars);
+        printTriangle(triangle);
     }
 
-    public static String[] fillArrayWithTriangleRows(char leftBorder, char rightBorder, boolean isAscending) {
+    private static char[] fillChars(char leftBorder, char rightBorder, boolean isAscending) {
         if (!isValidBorders(leftBorder, rightBorder)) return null;
 
         int height = rightBorder - leftBorder + 1;
-        String[] triangleRows = new String[height];
+        char[] triangleChars = new char[height];
         char currChar = isAscending ? leftBorder : rightBorder;
 
         for (int i = 0; i < height; i++) {
-            triangleRows[i] = buildTriangleRow(currChar, i, height);
-            if (isAscending) currChar++;
-            else currChar--;
+            triangleChars[i] = isAscending ? currChar++ : currChar--;
         }
-        return triangleRows;
+        return triangleChars;
     }
 
-    public static boolean isValidBorders(char leftBorder, char rightBorder) {
+    private static boolean isValidBorders(char leftBorder, char rightBorder) {
         if (leftBorder > rightBorder) {
             System.out.printf("%nОшибка: левая граница (%d) > правой (%d)%n",
                     (int) leftBorder, (int) rightBorder);
@@ -36,22 +37,23 @@ public class CharactersTriangle {
         return true;
     }
 
-    public static String buildTriangleRow(char rowChar, int rowIndex, int height) {
-        StringBuilder triangleRow = new StringBuilder();
+    private static String buildTriangle(char[] triangleChars) {
+        if (triangleChars == null) return null;
 
-        triangleRow.append(" ".repeat(height - 1 - rowIndex));
-        triangleRow.append(String.valueOf(rowChar).repeat(rowIndex * 2 + 1));
+        StringBuilder triangle = new StringBuilder();
+        int height = triangleChars.length;
 
-        return triangleRow.toString();
+        for (int i = 0; i < height; i++) {
+            triangle.append(" ".repeat(height - 1 - i));
+            triangle.append(String.valueOf(triangleChars[i]).repeat(i * 2 + 1));
+            triangle.append("\n");
+        }
+
+        return triangle.toString();
     }
 
-    public static void printTriangle(String[] triangleRows) {
-        if (triangleRows == null) return;
-
-        System.out.println();
-        for (String row : triangleRows) {
-            System.out.println(row);
-        }
-        System.out.println();
+    private static void printTriangle(String triangle) {
+        if (triangle == null) return;
+        System.out.println("\n" + triangle);
     }
 }
