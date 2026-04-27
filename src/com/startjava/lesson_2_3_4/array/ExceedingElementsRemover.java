@@ -8,14 +8,14 @@ public class ExceedingElementsRemover {
         int[] indices = {-1, 15, 0, 14};
 
         for (int thresholdIndex : indices) {
-            float[] originalNums = fillWithRandomFloats();
+            float[] originalNums = generateRandomFloats();
             float[] filteredNums = resetValuesAboveThreshold(originalNums, thresholdIndex);
             printArraysWithThresholdValue(originalNums, filteredNums, thresholdIndex);
             System.out.println();
         }
     }
 
-    private static float[] fillWithRandomFloats() {
+    private static float[] generateRandomFloats() {
         Random random = new Random();
         float[] nums = new float[15];
 
