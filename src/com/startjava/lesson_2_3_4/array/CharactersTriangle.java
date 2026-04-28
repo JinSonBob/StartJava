@@ -2,20 +2,20 @@ package com.startjava.lesson_2_3_4.array;
 
 public class CharactersTriangle {
     static void main() {
-        char[] triangleChars = fillChars('0', '9', true);
+        char[] triangleChars = generateOrderedChars('0', '9', true);
         String triangle = buildTriangle(triangleChars);
         printTriangle(triangle);
 
-        triangleChars = fillChars('/', '!', false);
+        triangleChars = generateOrderedChars('/', '!', false);
         triangle = buildTriangle(triangleChars);
         printTriangle(triangle);
 
-        triangleChars = fillChars('A', 'J', false);
+        triangleChars = generateOrderedChars('A', 'J', false);
         triangle = buildTriangle(triangleChars);
         printTriangle(triangle);
     }
 
-    private static char[] fillChars(char leftBorder, char rightBorder, boolean isAscending) {
+    private static char[] generateOrderedChars(char leftBorder, char rightBorder, boolean isAscending) {
         if (!isValidBorders(leftBorder, rightBorder)) return null;
 
         int height = rightBorder - leftBorder + 1;
