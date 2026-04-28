@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.array;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class UniqueNumGenerator {
@@ -27,7 +28,7 @@ public class UniqueNumGenerator {
 
     private static int[] generateUniqueNums(int leftBorder, int rightBorder) {
         int length = (int) ((rightBorder - leftBorder + 1) * 0.75);
-        if (!isValidBorders(leftBorder, rightBorder, length)) return null;
+        if (!isValidBordersAndLength(leftBorder, rightBorder, length)) return null;
 
         int[] uniqueNums = new int[length];
         Random random = new Random();
@@ -36,15 +37,16 @@ public class UniqueNumGenerator {
         while (countAdded < length) {
             int num = random.nextInt(leftBorder, rightBorder + 1);
 
-            if (isUniqueNum(uniqueNums, num)) {
+            if (isUniqueNum(uniqueNums, num, countAdded)) {
                 uniqueNums[countAdded] = num;
                 countAdded++;
             }
         }
+        Arrays.sort(uniqueNums);
         return uniqueNums;
     }
 
-    private static boolean isValidBorders(int leftBorder, int rightBorder, int length) {
+    private static boolean isValidBordersAndLength(int leftBorder, int rightBorder, int length) {
         if (leftBorder > rightBorder) {
             System.out.printf("%nОшибка: левая граница (%d) > правой (%d)", leftBorder, rightBorder);
             return false;
@@ -56,9 +58,9 @@ public class UniqueNumGenerator {
         return true;
     }
 
-    private static boolean isUniqueNum(int[] nums, int num) {
-        for (int uniqueNum : nums) {
-            if (uniqueNum == num) return false;
+    private static boolean isUniqueNum(int[] nums, int num, int countAdded) {
+        for (int i = 0; i < countAdded; i++) {
+            if (nums[i] == num) return false;
         }
         return true;
     }
@@ -72,7 +74,9 @@ public class UniqueNumGenerator {
             uniqueNumsString.append(uniqueNums[i]);
             uniqueNumsString.append(" ");
 
-            if ((i + 1) % rowLength == 0 && i != uniqueNums.length - 1) uniqueNumsString.append("\n");
+            if ((i + 1) % rowLength == 0 && i != uniqueNums.length - 1) {
+                uniqueNumsString.append("\n");
+            }
         }
 
         System.out.println(uniqueNumsString);
