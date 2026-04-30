@@ -28,25 +28,25 @@ public class UniqueNumGenerator {
 
     private static int[] generateUniqueNums(int leftBorder, int rightBorder) {
         int length = (int) ((rightBorder - leftBorder + 1) * 0.75);
-        if (!isValidBordersAndLength(leftBorder, rightBorder, length)) return null;
+        if (!isValidRange(leftBorder, rightBorder, length)) return null;
 
         int[] uniqueNums = new int[length];
         Random random = new Random();
 
-        int countAdded = 0;
-        while (countAdded < length) {
-            int num = random.nextInt(leftBorder, rightBorder + 1);
+        int addedCount = 0;
+        while (addedCount < length) {
+            int currNum = random.nextInt(leftBorder, rightBorder + 1);
 
-            if (isUniqueNum(uniqueNums, num, countAdded)) {
-                uniqueNums[countAdded] = num;
-                countAdded++;
+            if (hasNum(uniqueNums, currNum, addedCount)) {
+                uniqueNums[addedCount] = currNum;
+                addedCount++;
             }
         }
         Arrays.sort(uniqueNums);
         return uniqueNums;
     }
 
-    private static boolean isValidBordersAndLength(int leftBorder, int rightBorder, int length) {
+    private static boolean isValidRange(int leftBorder, int rightBorder, int length) {
         if (leftBorder > rightBorder) {
             System.out.printf("%nОшибка: левая граница (%d) > правой (%d)", leftBorder, rightBorder);
             return false;
@@ -58,9 +58,9 @@ public class UniqueNumGenerator {
         return true;
     }
 
-    private static boolean isUniqueNum(int[] nums, int num, int countAdded) {
-        for (int i = 0; i < countAdded; i++) {
-            if (nums[i] == num) return false;
+    private static boolean hasNum(int[] nums, int currNum, int addedCount) {
+        for (int i = 0; i < addedCount; i++) {
+            if (nums[i] == currNum) return false;
         }
         return true;
     }
