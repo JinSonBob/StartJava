@@ -6,7 +6,7 @@ import java.util.Random;
 public class PasswordCracker {
     static void main() throws InterruptedException {
         char[][] passwords = {
-                "123456".toCharArray(),
+                "\")]H)CCF+N".toCharArray(),
                 generatePass(),
                 generatePass(),
                 generatePass()};
@@ -68,9 +68,9 @@ public class PasswordCracker {
         String redColor = "\u001B[31m";
         String greenColor = "\u001B[32m";
 
-        spinner();
+        showSpinner();
 
-        if (isStrongPassword(password, passwordMetrics)) {
+        if (!isStrongPassword(password, passwordMetrics)) {
             System.out.printf("%s✗ Strong password: %s%s%n",
                     redColor, String.valueOf(password), resetColor);
             return;
@@ -79,18 +79,18 @@ public class PasswordCracker {
                 greenColor, String.valueOf(password), resetColor);
     }
 
-    private static void spinner() throws InterruptedException {
-        char[] spinnerChars = {'-', '\\', '|', '/'};
-        int revolutions = spinnerChars.length * 3;
+    private static void showSpinner() throws InterruptedException {
+        char[] spins = {'-', '\\', '|', '/'};
+        int revolutions = spins.length * 3;
 
         System.out.print("\nCracking password: ");
 
         for (int i = 0; i <= revolutions; i++) {
-            System.out.print(spinnerChars[i % spinnerChars.length]);
+            System.out.print(spins[i % spins.length]);
             Thread.sleep(250);
             System.out.print("\b");
         }
-        System.out.println("\r\r");
+        System.out.print("\r\r");
     }
 
     private static boolean isStrongPassword(char[] password, boolean[] passwordMetrics) {
@@ -139,7 +139,7 @@ public class PasswordCracker {
                 isStrongPassword = false;
             }
 
-            if (!hasLowerCase && !hasUpperCase) {
+            if (!hasLowerCase || !hasUpperCase) {
                 System.out.println("Пароль не содержит буквы нижнего и верхнего регистров");
                 isStrongPassword = false;
             }
