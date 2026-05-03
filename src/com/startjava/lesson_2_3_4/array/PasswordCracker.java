@@ -61,39 +61,43 @@ public class PasswordCracker {
 
         if (isBlackListed) {
             System.out.print("""
-                        Не используйте пароли из списка популярных:
-                        https://nordpass.com/most-common-passwords-list
-                        """);
+                    Не используйте пароли из списка популярных:
+                    https://nordpass.com/most-common-passwords-list
+                    """);
             isStrongPassword = false;
-        } else {
-            if (password.length == 0) {
-                System.out.println("Пароль не может быть пустым");
-                isStrongPassword = false;
-            }
+        }
+        if (password.length == 0) {
+            System.out.println("Пароль не может быть пустым");
+            isStrongPassword = false;
+        }
+        if (password.length < 8) {
+            System.out.println("Пароль содержит менее 8-и символов");
+            isStrongPassword = false;
+        }
 
-            if (!hasDigit) {
-                System.out.println("Пароль не содержит цифры");
-                isStrongPassword = false;
-            }
+        if (!hasDigit) {
+            System.out.println("Пароль не содержит цифры");
+            isStrongPassword = false;
+        }
 
-            if (!hasUpperCase) {
-                System.out.println("Пароль не содержит буквы верхнего регистра");
-                isStrongPassword = false;
-            }
+        if (!hasUpperCase) {
+            System.out.println("Пароль не содержит буквы верхнего регистра");
+            isStrongPassword = false;
+        }
 
-            if (!hasLowerCase) {
-                System.out.println("Пароль не содержит буквы нижнего регистра");
-                isStrongPassword = false;
-            }
+        if (!hasLowerCase) {
+            System.out.println("Пароль не содержит буквы нижнего регистра");
+            isStrongPassword = false;
+        }
 
-            if (!hasSpecChar) {
-                System.out.println("Пароль не содержит спец. символы");
-                isStrongPassword = false;
-            }
+        if (!hasSpecChar) {
+            System.out.println("Пароль не содержит спец. символы");
+            isStrongPassword = false;
         }
         return isStrongPassword;
     }
 
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     private static void crackPassword(char[] password, boolean isPasswordStrong)
             throws InterruptedException {
         String resetColor = "\u001B[0m";
