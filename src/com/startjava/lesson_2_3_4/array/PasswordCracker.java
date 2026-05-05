@@ -8,6 +8,12 @@ public class PasswordCracker {
             "array".toCharArray(),
             "qwerty".toCharArray(),
             "123456".toCharArray()};
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
+    private static final String RESET_COLOR = "\u001B[0m";
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
+    private static final String RED_COLOR = "\u001B[31m";
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
+    private static final String GREEN_COLOR = "\u001B[32m";
 
     static void main() throws InterruptedException {
         char[][] passwords = {
@@ -99,22 +105,17 @@ public class PasswordCracker {
         return isStrong;
     }
 
-    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     private static void crackPassword(char[] password, boolean isStrong)
             throws InterruptedException {
-        String resetColor = "\u001B[0m";
-        String redColor = "\u001B[31m";
-        String greenColor = "\u001B[32m";
-
         showSpinner();
 
         if (isStrong) {
             System.out.printf("%s✗ Strong password: %s%s%n",
-                    redColor, String.valueOf(password), resetColor);
+                    RED_COLOR, String.valueOf(password), RESET_COLOR);
             return;
         }
         System.out.printf("%s✓ Password cracked: %s%s%n",
-                greenColor, String.valueOf(password), resetColor);
+                GREEN_COLOR, String.valueOf(password), RESET_COLOR);
     }
 
     private static void showSpinner() throws InterruptedException {
