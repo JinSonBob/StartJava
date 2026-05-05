@@ -15,8 +15,7 @@ public class Typewriter {
 
         for (String text : texts) {
             if (!isValidText(text)) continue;
-            String[] words = splitWords(text);
-            String[] wordsRange = getWordsRange(words);
+            int[] wordsRange = getWordsRange(text);
             String finalText = wordsToUppercase(text, wordsRange[0], wordsRange[1]);
             typewrite(finalText);
             System.out.println();
@@ -31,52 +30,52 @@ public class Typewriter {
         return true;
     }
 
-    private static String[] splitWords(String text) {
-        return text.split("[^a-zA-Zа-яА-Я0-9+-]+");
-    }
-
-    private static String[] getWordsRange(String[] words) {
+    private static int[] getWordsRange(String text) {
         int minWordLength = 1000;
-        String minWord = "";
         int maxWordLength = -1000;
-        String maxWord = "";
+        int minWordStart = 0;
+        int minWordEnd = 0;
+        int maxWordStart = 0;
+        int maxWordEnd = 0;
 
-        for (String word : words) {
-            if (!isValidWord(word)) continue;
+        int wordStart = -1;
+        boolean hasLetter = false;
+        for (int i = 0; i < text.length(); i++) {
+            char currChar = text.charAt(i);
+            boolean isWordChar = Character.isLetter(currChar) || currChar == '+' || currChar == '-';
 
-            int wordLength = word.length();
-
-            if (wordLength < minWordLength) {
-                minWordLength = wordLength;
-                minWord = word;
+            if (isWordChar) {
+                if (wordStart == -1) wordStart = i;
+                if (Character.isLetter(currChar)) hasLetter = true;
             }
+            if (!isWordChar && wordStart != -1) {
+                int currLength = i - wordStart;
 
-            if (wordLength > maxWordLength) {
-                maxWordLength = wordLength;
-                maxWord = word;
+                if (hasLetter) {
+                    if (currLength < minWordLength) {
+                        minWordLength = currLength;
+                        minWordStart = wordStart;
+                        minWordEnd = i;
+                    }
+                    if (currLength > maxWordLength) {
+                        maxWordLength = currLength;
+                        maxWordStart = wordStart;
+                        maxWordEnd = i;
+                    }
+                }
+
+                wordStart = -1;
+                hasLetter = false;
             }
         }
-        return new String[]{minWord, maxWord};
+
+        int startIndex = Math.min(minWordStart, maxWordStart);
+        int endIndex = Math.max(minWordEnd, maxWordEnd);
+
+        return new int[]{startIndex, endIndex};
     }
 
-    private static boolean isValidWord(String word) {
-        for (int i = 0; i < word.length(); i++) {
-            if (Character.isLetterOrDigit(word.charAt(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static String wordsToUppercase(String text, String minWord, String maxWord) {
-        int minWordIndex = text.indexOf(minWord);
-        int maxWordIndex = text.indexOf(maxWord);
-
-        int startIndex = Math.min(minWordIndex, maxWordIndex);
-        int endIndex = minWordIndex > maxWordIndex ?
-                minWordIndex + minWord.length() :
-                maxWordIndex + maxWord.length();
-
+    private static String wordsToUppercase(String text, int startIndex, int endIndex) {
         return text.substring(0, startIndex) +
                 text.substring(startIndex, endIndex).toUpperCase() +
                 text.substring(endIndex);
