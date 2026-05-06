@@ -17,7 +17,7 @@ public class Typewriter {
             if (!isValidText(text)) continue;
             int[] wordsRange = getWordsRange(text);
             String finalText = wordsToUppercase(text, wordsRange[0], wordsRange[1]);
-            typewrite(finalText);
+            type(finalText);
             System.out.println();
         }
     }
@@ -32,47 +32,62 @@ public class Typewriter {
 
     private static int[] getWordsRange(String text) {
         int minWordLength = 1000;
-        int maxWordLength = -1000;
-        int minWordStart = 0;
-        int minWordEnd = 0;
-        int maxWordStart = 0;
-        int maxWordEnd = 0;
+        int maxWordLength = -1;
+        String minWord = "";
+        String maxWord = "";
+        int minWordIndex = -1;
+        int maxWordIndex = -1;
 
-        int wordStart = -1;
-        boolean hasLetter = false;
-        for (int i = 0; i < text.length(); i++) {
-            char currChar = text.charAt(i);
-            boolean isWordChar = Character.isLetter(currChar) || currChar == '+' || currChar == '-';
+        String[] rawWords = text.split(" ");
 
-            if (isWordChar) {
-                if (wordStart == -1) wordStart = i;
-                if (Character.isLetter(currChar)) hasLetter = true;
+        for (String rawWord : rawWords) {
+            String word = rawWord.replaceAll("^[^a-zA-Zа-яА-ЯёЁ0-9]+|[^a-zA-Zа-яА-ЯёЁ0-9+]+$", "");
+
+            if (!hasLetter(word)) continue;
+
+            int currWordLength = word.length();
+
+            if (currWordLength < minWordLength) {
+                minWordLength = currWordLength;
+                minWord = word;
             }
-            if (!isWordChar && wordStart != -1) {
-                int currLength = i - wordStart;
-
-                if (hasLetter) {
-                    if (currLength < minWordLength) {
-                        minWordLength = currLength;
-                        minWordStart = wordStart;
-                        minWordEnd = i;
-                    }
-                    if (currLength > maxWordLength) {
-                        maxWordLength = currLength;
-                        maxWordStart = wordStart;
-                        maxWordEnd = i;
-                    }
-                }
-
-                wordStart = -1;
-                hasLetter = false;
+            if (currWordLength > maxWordLength) {
+                maxWordLength = currWordLength;
+                maxWord = word;
             }
         }
 
-        int startIndex = Math.min(minWordStart, maxWordStart);
-        int endIndex = Math.max(minWordEnd, maxWordEnd);
+        int startSearchIndex = 0;
+
+        for (String rawWord : rawWords) {
+            if (rawWord.isEmpty()) continue;
+
+            int currWordIndex = text.indexOf(rawWord, startSearchIndex);
+            String word = rawWord.replaceAll("^[^a-zA-Zа-яА-ЯёЁ0-9]+|[^a-zA-Zа-яА-ЯёЁ0-9+]+$", "");
+
+            if (word.equals(minWord)) {
+                minWordIndex = currWordIndex + rawWord.indexOf(word);
+            }
+            if (word.equals(maxWord)) {
+                maxWordIndex = currWordIndex + rawWord.indexOf(word);
+            }
+
+            startSearchIndex = currWordIndex + rawWord.length();
+        }
+
+        int startIndex = Math.min(minWordIndex, maxWordIndex);
+        int endIndex = (minWordIndex > maxWordIndex) ?
+                minWordIndex + minWordLength :
+                maxWordIndex + maxWordLength;
 
         return new int[]{startIndex, endIndex};
+    }
+
+    private static boolean hasLetter(String word) {
+        for (int i = 0; i < word.length(); i++) {
+            if (Character.isLetter(word.charAt(i))) return true;
+        }
+        return false;
     }
 
     private static String wordsToUppercase(String text, int startIndex, int endIndex) {
@@ -81,7 +96,7 @@ public class Typewriter {
                 text.substring(endIndex);
     }
 
-    private static void typewrite(String text) throws InterruptedException {
+    private static void type(String text) throws InterruptedException {
         for (int i = 0; i < text.length(); i++) {
             System.out.print(text.charAt(i));
             Thread.sleep(100);
