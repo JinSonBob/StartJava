@@ -84,7 +84,7 @@ public class UniqueNumGenerator {
 
     private static boolean isValidRowLength(int rowLength) {
         if (rowLength < 1) {
-            System.out.printf("%nОшибка: количество чисел в строке не должно быть < 1 (%d)", rowLength);
+            System.out.printf("%nОшибка: количество чисел в строке не должно быть > 1 (%d)", rowLength);
             return false;
         }
         return true;
