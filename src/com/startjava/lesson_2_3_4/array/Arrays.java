@@ -10,7 +10,7 @@ public class Arrays {
 
     private Arrays() {}
 
-    public static String buildCharactersTriangle(char leftBorder, char rightBorder, boolean isAscending) {
+    public static String generateCharactersTriangle(char leftBorder, char rightBorder, boolean isAscending) {
         if (leftBorder > rightBorder) {
             Console.printError("левая граница (" + (int) leftBorder +
                     ") > правой (" + (int) rightBorder + ")");
@@ -36,34 +36,6 @@ public class Arrays {
         return triangle.toString();
     }
 
-    public static long[] calculateFactorials(int[] nums) {
-        if (nums == null) {
-            Console.printError("данные типа null");
-            return null;
-        }
-
-        if (nums.length == 0) {
-            Console.printError("длинна массива = 0");
-            return null;
-        }
-
-        long[] results = new long[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            if (num > 20) {
-                Console.printError("факториал " + num + " слишком велик (максимум 20!)");
-                results[i] = -1;
-            } else if (num < 0) {
-                Console.printError("факториал " + num + " не определен");
-                results[i] = -1;
-            } else {
-                results[i] = getFactorial(num);
-            }
-        }
-        return results;
-    }
-
     public static char[] generatePassword() {
         Random random = new Random();
         int passwordLength = random.nextInt(6, 13);
@@ -75,7 +47,17 @@ public class Arrays {
         return password;
     }
 
-    public static int[] generateUniqueNums(int leftBorder, int rightBorder) {
+    public static float[] generateRandomFloatArray(int length) {
+        Random random = new Random();
+        float[] nums = new float[length];
+
+        for (int i = 0; i < length; i++) {
+            nums[i] = random.nextFloat();
+        }
+        return nums;
+    }
+
+    public static int[] generateUniqueNumArray(int leftBorder, int rightBorder) {
         int length = (int) ((rightBorder - leftBorder + 1) * 0.75);
 
         if (leftBorder > rightBorder) {
@@ -111,9 +93,37 @@ public class Arrays {
         return uniqueNums;
     }
 
-    private static long getFactorial(int num) {
+    public static long[] getFactorials(int[] nums) {
+        if (nums == null) {
+            Console.printError("данные типа null");
+            return null;
+        }
+
+        if (nums.length == 0) {
+            Console.printError("длинна массива = 0");
+            return null;
+        }
+
+        long[] factorials = new long[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (num > 20) {
+                Console.printError("факториал " + num + " слишком велик (максимум 20!)");
+                factorials[i] = -1;
+            } else if (num < 0) {
+                Console.printError("факториал " + num + " не определен");
+                factorials[i] = -1;
+            } else {
+                factorials[i] = factorial(num);
+            }
+        }
+        return factorials;
+    }
+
+    private static long factorial(int num) {
         if (num == 0 || num == 1) return 1;
-        return num * getFactorial(num - 1);
+        return num * factorial(num - 1);
     }
 
     public static boolean isStrongPassword(char[] password) {
@@ -266,8 +276,8 @@ public class Arrays {
         int length = nums.length;
         int[] reversedNums = new int[length];
 
-        for (int transaction : nums) {
-            reversedNums[--length] = transaction;
+        for (int num : nums) {
+            reversedNums[--length] = num;
         }
         return reversedNums;
     }

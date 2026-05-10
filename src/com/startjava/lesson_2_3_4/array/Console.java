@@ -24,10 +24,13 @@ public class Console {
 
     public static void printFactorialExpression(int[] nums, long[] factorials) {
         if (nums == null || factorials == null) return;
+
+        StringBuilder expression = new StringBuilder();
+
         for (int i = 0; i < nums.length; i++) {
             if (factorials[i] == -1) continue;
 
-            StringBuilder expression = new StringBuilder().append(nums[i]);
+            expression.append(nums[i]);
             expression.append("! = ");
 
             if (nums[i] == 0 || nums[i] == 1) {
@@ -40,6 +43,7 @@ public class Console {
                 expression.append(" = ").append(factorials[i]);
             }
             System.out.println(expression);
+            expression.setLength(0);
         }
     }
 
@@ -50,12 +54,8 @@ public class Console {
         }
     }
 
-    public static void printFormattedFloat(String label, float value) {
-        System.out.printf("%s %.3f%n", label, value);
-    }
-
-    public static void printIntArray(int[] nums) {
-        System.out.print(java.util.Arrays.toString(nums));
+    public static void printFormattedFloat(String message, float value) {
+        System.out.printf("%s %.3f%n", message, value);
     }
 
     public static void printIntArrayInRows(int[] nums, int rowLength) {
@@ -84,6 +84,10 @@ public class Console {
 
     public static void printText(String text) {
         System.out.print(text);
+    }
+
+    public static void printTextWithIntArray(String text, int[] nums) {
+        System.out.print(text + java.util.Arrays.toString(nums));
     }
 
     public static void showSpinner() throws InterruptedException {

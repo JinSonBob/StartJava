@@ -1,7 +1,5 @@
 package com.startjava.lesson_2_3_4.array;
 
-import java.util.Random;
-
 public class Main {
     static void main() throws InterruptedException {
         reverseTransactions();
@@ -26,12 +24,10 @@ public class Main {
             int[] reversedTransactions = Arrays.reverse(transactions);
 
             if (reversedTransactions != null) {
-                Console.printText("Исходные транзакции: ");
-                Console.printIntArray(transactions);
+                Console.printTextWithIntArray("Исходные транзакции: ", transactions);
                 Console.printBlankLine();
 
-                Console.printText(" В обратном порядке: ");
-                Console.printIntArray(reversedTransactions);
+                Console.printTextWithIntArray(" В обратном порядке: ", reversedTransactions);
                 Console.printBlankLine();
             }
             Console.printBlankLine();
@@ -42,15 +38,16 @@ public class Main {
         int[][] testNums = {
                 {},
                 null,
-                {-5}, {7, 0, 21},
+                {-5},
+                {7, 0, 21},
                 {1, 20, 5, -3}
         };
 
         for (int[] nums : testNums) {
-            long[] results = Arrays.calculateFactorials(nums);
+            long[] factorials = Arrays.getFactorials(nums);
 
-            if (results != null) {
-                Console.printFactorialExpression(nums, results);
+            if (factorials != null) {
+                Console.printFactorialExpression(nums, factorials);
             }
             Console.printBlankLine();
         }
@@ -58,20 +55,14 @@ public class Main {
 
     private static void removeExceedingElements() {
         int[] indices = {-1, 15, 0, 14};
-
-        Random random = new Random();
-        float[] originalNums = new float[15];
-
-        for (int i = 0; i < originalNums.length; i++) {
-            originalNums[i] = random.nextFloat();
-        }
+        float[] testNums = Arrays.generateRandomFloatArray(15);
 
         for (int thresholdIndex : indices) {
-            float[] filteredNums = Arrays.resetValuesAboveThreshold(originalNums, thresholdIndex);
+            float[] filteredNums = Arrays.resetValuesAboveThreshold(testNums, thresholdIndex);
 
             if (filteredNums != null) {
                 Console.printNewLineText("Исходный массив: ");
-                Console.printFloatArrayInRows(originalNums, 8);
+                Console.printFloatArrayInRows(testNums, 8);
                 Console.printBlankLine();
 
                 Console.printNewLineText("Изменённый массив: ");
@@ -79,22 +70,22 @@ public class Main {
                 Console.printBlankLine();
 
                 Console.printFormattedFloat("Значение ячейки по переданному индексу:",
-                        originalNums[thresholdIndex]);
+                        testNums[thresholdIndex]);
             }
             Console.printBlankLine();
         }
     }
 
     private static void buildCharactersTriangle() {
-        String triangle = Arrays.buildCharactersTriangle('0', '9', true);
+        String triangle = Arrays.generateCharactersTriangle('0', '9', true);
         if (triangle != null) Console.printText(triangle);
         Console.printBlankLine();
 
-        triangle = Arrays.buildCharactersTriangle('/', '!', true);
+        triangle = Arrays.generateCharactersTriangle('/', '!', true);
         if (triangle != null) Console.printText(triangle);
         Console.printBlankLine();
 
-        triangle = Arrays.buildCharactersTriangle('A', 'J', true);
+        triangle = Arrays.generateCharactersTriangle('A', 'J', true);
         if (triangle != null) Console.printText(triangle);
         Console.printBlankLine();
     }
@@ -109,7 +100,7 @@ public class Main {
         };
 
         for (int[] nums : testNums) {
-            int[] uniqueNums = Arrays.generateUniqueNums(nums[0], nums[1]);
+            int[] uniqueNums = Arrays.generateUniqueNumArray(nums[0], nums[1]);
 
             if (uniqueNums != null) {
                 Console.printIntArrayInRows(uniqueNums, nums[2]);
