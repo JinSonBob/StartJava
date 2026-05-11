@@ -10,11 +10,23 @@ public class Console {
 
     private Console() {}
 
-    public static void printBlankLine() {
+    public static void print(String text) {
+        System.out.print(text);
+    }
+
+    public static void println() {
         System.out.println();
     }
 
-    public static void printColoredText(String text, String color) {
+    public static void println(String text) {
+        System.out.println(text);
+    }
+
+    public static void printf(String format, Object... args) {
+        System.out.printf(format, args);
+    }
+
+    public static void printColored(String text, String color) {
         System.out.println(color + text + RESET_COLOR);
     }
 
@@ -22,8 +34,43 @@ public class Console {
         System.out.println("Ошибка: " + message);
     }
 
+    public static void printTextWithIntArray(String text, int[] nums) {
+        System.out.print(text + java.util.Arrays.toString(nums));
+    }
+
+    public static void printInRows(float[] nums, int numsPerRow) {
+        for (int i = 0; i < nums.length; i++) {
+            System.out.printf("%.3f ", nums[i]);
+            if ((i + 1) % numsPerRow == 0) System.out.println();
+        }
+    }
+
+    public static void printInRows(int[] nums, int rowLength) {
+        if (rowLength < 1) {
+            printError("количество чисел в строке должно быть > 0 (" + rowLength + ")");
+            return;
+        }
+
+        StringBuilder numsString = new StringBuilder();
+
+        for (int i = 0; i < nums.length; i++) {
+            numsString.append(nums[i]);
+            numsString.append(" ");
+
+            if ((i + 1) % rowLength == 0 && i != nums.length - 1) {
+                numsString.append("\n");
+            }
+        }
+
+        System.out.println(numsString);
+    }
+
     public static void printFactorialExpression(int[] nums, long[] factorials) {
         if (nums == null || factorials == null) return;
+        if (nums.length != factorials.length) {
+            printError("массивы разной длины");
+            return;
+        }
 
         StringBuilder expression = new StringBuilder();
 
@@ -47,54 +94,11 @@ public class Console {
         }
     }
 
-    public static void printFloatArrayInRows(float[] nums, int numsPerRow) {
-        for (int i = 0; i < nums.length; i++) {
-            System.out.printf("%.3f ", nums[i]);
-            if ((i + 1) % numsPerRow == 0) System.out.println();
-        }
-    }
-
-    public static void printFormattedFloat(String message, float value) {
-        System.out.printf("%s %.3f%n", message, value);
-    }
-
-    public static void printIntArrayInRows(int[] nums, int rowLength) {
-        if (rowLength < 1) {
-            printError("количество чисел в строке не должно быть > 1 (" + rowLength + ")");
-            return;
-        }
-
-        StringBuilder uniqueNumsString = new StringBuilder();
-
-        for (int i = 0; i < nums.length; i++) {
-            uniqueNumsString.append(nums[i]);
-            uniqueNumsString.append(" ");
-
-            if ((i + 1) % rowLength == 0 && i != nums.length - 1) {
-                uniqueNumsString.append("\n");
-            }
-        }
-
-        System.out.println(uniqueNumsString);
-    }
-
-    public static void printNewLineText(String text) {
-        System.out.println(text);
-    }
-
-    public static void printText(String text) {
-        System.out.print(text);
-    }
-
-    public static void printTextWithIntArray(String text, int[] nums) {
-        System.out.print(text + java.util.Arrays.toString(nums));
-    }
-
-    public static void showSpinner() throws InterruptedException {
+    public static void printWithSpinner(String text) throws InterruptedException {
         char[] spins = {'-', '\\', '|', '/'};
         int revolutions = spins.length * 3;
 
-        System.out.print("Cracking password: ");
+        System.out.print(text);
 
         for (int i = 0; i < revolutions; i++) {
             System.out.print(spins[i % spins.length]);
@@ -104,7 +108,7 @@ public class Console {
         System.out.print("\r\r");
     }
 
-    public static void typeText(String text) throws InterruptedException {
+    public static void printTypingText(String text) throws InterruptedException {
         for (int i = 0; i < text.length(); i++) {
             System.out.print(text.charAt(i));
             Thread.sleep(100);

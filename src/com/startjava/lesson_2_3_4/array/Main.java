@@ -25,12 +25,12 @@ public class Main {
 
             if (reversedTransactions != null) {
                 Console.printTextWithIntArray("Исходные транзакции: ", transactions);
-                Console.printBlankLine();
+                Console.println();
 
                 Console.printTextWithIntArray(" В обратном порядке: ", reversedTransactions);
-                Console.printBlankLine();
+                Console.println();
             }
-            Console.printBlankLine();
+            Console.println();
         }
     }
 
@@ -44,12 +44,12 @@ public class Main {
         };
 
         for (int[] nums : testNums) {
-            long[] factorials = Arrays.getFactorials(nums);
+            long[] factorials = Arrays.calculateFactorials(nums);
 
             if (factorials != null) {
                 Console.printFactorialExpression(nums, factorials);
             }
-            Console.printBlankLine();
+            Console.println();
         }
     }
 
@@ -58,36 +58,36 @@ public class Main {
         float[] testNums = Arrays.generateRandomFloatArray(15);
 
         for (int thresholdIndex : indices) {
-            float[] filteredNums = Arrays.resetValuesAboveThreshold(testNums, thresholdIndex);
+            float[] filteredNums = Arrays.resetAboveThresholdValues(testNums, thresholdIndex);
 
             if (filteredNums != null) {
-                Console.printNewLineText("Исходный массив: ");
-                Console.printFloatArrayInRows(testNums, 8);
-                Console.printBlankLine();
+                Console.println("Исходный массив: ");
+                Console.printInRows(testNums, 8);
+                Console.println();
 
-                Console.printNewLineText("Изменённый массив: ");
-                Console.printFloatArrayInRows(filteredNums, 8);
-                Console.printBlankLine();
+                Console.println("Изменённый массив: ");
+                Console.printInRows(filteredNums, 8);
+                Console.println();
 
-                Console.printFormattedFloat("Значение ячейки по переданному индексу:",
+                Console.printf("%s %.3f%n", "Значение ячейки по переданному индексу:",
                         testNums[thresholdIndex]);
             }
-            Console.printBlankLine();
+            Console.println();
         }
     }
 
     private static void buildCharactersTriangle() {
         String triangle = Arrays.generateCharactersTriangle('0', '9', true);
-        if (triangle != null) Console.printText(triangle);
-        Console.printBlankLine();
+        if (triangle != null) Console.print(triangle);
+        Console.println();
 
         triangle = Arrays.generateCharactersTriangle('/', '!', true);
-        if (triangle != null) Console.printText(triangle);
-        Console.printBlankLine();
+        if (triangle != null) Console.print(triangle);
+        Console.println();
 
         triangle = Arrays.generateCharactersTriangle('A', 'J', true);
-        if (triangle != null) Console.printText(triangle);
-        Console.printBlankLine();
+        if (triangle != null) Console.print(triangle);
+        Console.println();
     }
 
     private static void generateUniqueNums() {
@@ -100,12 +100,12 @@ public class Main {
         };
 
         for (int[] nums : testNums) {
-            int[] uniqueNums = Arrays.generateUniqueNumArray(nums[0], nums[1]);
+            int[] uniqueNums = Arrays.generateUniqueNums(nums[0], nums[1]);
 
             if (uniqueNums != null) {
-                Console.printIntArrayInRows(uniqueNums, nums[2]);
+                Console.printInRows(uniqueNums, nums[2]);
             }
-            Console.printBlankLine();
+            Console.println();
         }
     }
 
@@ -123,17 +123,17 @@ public class Main {
                 continue;
             }
 
-            Console.showSpinner();
+            Console.printWithSpinner("Cracking password: ");
 
             boolean isStrong = Arrays.isStrongPassword(password);
             String strengthColor = isStrong ? Console.RED_COLOR : Console.GREEN_COLOR;
 
             if (isStrong) {
-                Console.printColoredText("✗ Strong password: " + String.valueOf(password), strengthColor);
+                Console.printColored("✗ Strong password: " + String.valueOf(password), strengthColor);
             } else {
-                Console.printColoredText("✓ Password cracked: " + String.valueOf(password), strengthColor);
+                Console.printColored("✓ Password cracked: " + String.valueOf(password), strengthColor);
             }
-            Console.printBlankLine();
+            Console.println();
         }
     }
 
@@ -152,14 +152,14 @@ public class Main {
         for (String text : texts) {
             if (text == null || text.isBlank()) {
                 Console.printError("Введена пустая строка");
-                Console.printBlankLine();
+                Console.println();
                 continue;
             }
 
-            String finalText = Arrays.minMaxWordRangeToUpperCase(text);
-            Console.typeText(finalText);
-            Console.printBlankLine();
-            Console.printBlankLine();
+            String finalText = Arrays.upperCaseBetweenMinMaxWords(text);
+            Console.printTypingText(finalText);
+            Console.println();
+            Console.println();
         }
     }
 }

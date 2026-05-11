@@ -10,6 +10,39 @@ public class Arrays {
 
     private Arrays() {}
 
+    public static long[] calculateFactorials(int[] nums) {
+        if (nums == null) {
+            Console.printError("данные типа null");
+            return null;
+        }
+
+        if (nums.length == 0) {
+            Console.printError("длинна массива = 0");
+            return null;
+        }
+
+        long[] factorials = new long[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (num > 20) {
+                Console.printError("факториал " + num + " слишком велик (максимум 20!)");
+                factorials[i] = -1;
+            } else if (num < 0) {
+                Console.printError("факториал " + num + " не определен");
+                factorials[i] = -1;
+            } else {
+                factorials[i] = factorial(num);
+            }
+        }
+        return factorials;
+    }
+
+    private static long factorial(int num) {
+        if (num == 0 || num == 1) return 1;
+        return num * factorial(num - 1);
+    }
+
     public static String generateCharactersTriangle(char leftBorder, char rightBorder, boolean isAscending) {
         if (leftBorder > rightBorder) {
             Console.printError("левая граница (" + (int) leftBorder +
@@ -57,13 +90,13 @@ public class Arrays {
         return nums;
     }
 
-    public static int[] generateUniqueNumArray(int leftBorder, int rightBorder) {
-        int length = (int) ((rightBorder - leftBorder + 1) * 0.75);
-
+    public static int[] generateUniqueNums(int leftBorder, int rightBorder) {
         if (leftBorder > rightBorder) {
             Console.printError("левая граница (" + leftBorder + ") > правой (" + rightBorder + ")");
             return null;
         }
+
+        int length = (int) ((rightBorder - leftBorder + 1) * 0.75);
         if (length <= 0) {
             Console.printError("длина массива должна быть > 0 (" + length + ")");
             return null;
@@ -93,39 +126,6 @@ public class Arrays {
         return uniqueNums;
     }
 
-    public static long[] getFactorials(int[] nums) {
-        if (nums == null) {
-            Console.printError("данные типа null");
-            return null;
-        }
-
-        if (nums.length == 0) {
-            Console.printError("длинна массива = 0");
-            return null;
-        }
-
-        long[] factorials = new long[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            if (num > 20) {
-                Console.printError("факториал " + num + " слишком велик (максимум 20!)");
-                factorials[i] = -1;
-            } else if (num < 0) {
-                Console.printError("факториал " + num + " не определен");
-                factorials[i] = -1;
-            } else {
-                factorials[i] = factorial(num);
-            }
-        }
-        return factorials;
-    }
-
-    private static long factorial(int num) {
-        if (num == 0 || num == 1) return 1;
-        return num * factorial(num - 1);
-    }
-
     public static boolean isStrongPassword(char[] password) {
         boolean hasDigit = false;
         boolean hasSpecChar = false;
@@ -135,12 +135,15 @@ public class Arrays {
         boolean isStrong = true;
 
         for (char passwordChar : password) {
-            if (Character.isDigit(passwordChar)) hasDigit = true;
-            else if (Character.isUpperCase(passwordChar)) {
+            if (Character.isDigit(passwordChar)) {
+                hasDigit = true;
+            } else if (Character.isUpperCase(passwordChar)) {
                 hasUpperCase = true;
             } else if (Character.isLowerCase(passwordChar)) {
                 hasLowerCase = true;
-            } else hasSpecChar = true;
+            } else {
+                hasSpecChar = true;
+            }
         }
 
         for (char[] blacklistedPassword : PASSWORD_BLACKLIST) {
@@ -187,7 +190,46 @@ public class Arrays {
         return isStrong;
     }
 
-    public static String minMaxWordRangeToUpperCase(String text) {
+    public static float[] resetAboveThresholdValues(float[] originalNums, int thresholdIndex) {
+        if (originalNums == null) {
+            Console.printError("исходный массив не содержит элементов");
+            return null;
+        }
+        if (thresholdIndex < 0 || thresholdIndex > 14) {
+            Console.printError("указан несуществующий индекс " + thresholdIndex +
+                    ". Допустимо: 0 <= индекс <= 14");
+            return null;
+        }
+
+        float[] filteredNums = java.util.Arrays.copyOf(originalNums, originalNums.length);
+        float thresholdNum = originalNums[thresholdIndex];
+
+        for (int i = 0; i < filteredNums.length; i++) {
+            if (filteredNums[i] > thresholdNum) filteredNums[i] = 0f;
+        }
+        return filteredNums;
+    }
+
+    public static int[] reverse(int[] nums) {
+        if (nums == null) {
+            Console.printError("данные типа null");
+            return null;
+        }
+        if (nums.length == 0) {
+            Console.printError("длина массива = 0");
+            return null;
+        }
+
+        int length = nums.length;
+        int[] reversedNums = new int[length];
+
+        for (int num : nums) {
+            reversedNums[--length] = num;
+        }
+        return reversedNums;
+    }
+
+    public static String upperCaseBetweenMinMaxWords(String text) {
         int minWordLength = 1000;
         int maxWordLength = -1;
         String minWord = "";
@@ -202,8 +244,10 @@ public class Arrays {
 
             boolean hasLetter = false;
             for (char c : word.toCharArray()) {
-                if (Character.isLetter(c)) hasLetter = true;
-                break;
+                if (Character.isLetter(c)) {
+                    hasLetter = true;
+                    break;
+                }
             }
             if (!hasLetter) continue;
 
@@ -245,40 +289,5 @@ public class Arrays {
         return text.substring(0, startIndex) +
                 text.substring(startIndex, endIndex).toUpperCase() +
                 text.substring(endIndex);
-    }
-
-    public static float[] resetValuesAboveThreshold(float[] originalNums, int thresholdIndex) {
-        if (thresholdIndex < 0 || thresholdIndex > 14) {
-            Console.printError("указан несуществующий индекс " + thresholdIndex +
-                    ". Допустимо: 0 <= индекс <= 14");
-            return null;
-        }
-
-        float[] filteredNums = java.util.Arrays.copyOf(originalNums, originalNums.length);
-        float thresholdNum = originalNums[thresholdIndex];
-
-        for (int i = 0; i < filteredNums.length; i++) {
-            if (filteredNums[i] > thresholdNum) filteredNums[i] = 0f;
-        }
-        return filteredNums;
-    }
-
-    public static int[] reverse(int[] nums) {
-        if (nums == null) {
-            Console.printError("данные типа null");
-            return null;
-        }
-        if (nums.length == 0) {
-            Console.printError("длина массива = 0");
-            return null;
-        }
-
-        int length = nums.length;
-        int[] reversedNums = new int[length];
-
-        for (int num : nums) {
-            reversedNums[--length] = num;
-        }
-        return reversedNums;
     }
 }
