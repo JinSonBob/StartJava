@@ -6,35 +6,31 @@ public class HangmanGameMain {
     static void main() {
         Scanner scanner = new Scanner(System.in);
         HangmanGame game = new HangmanGame();
-        String answer;
+        String answer = "yes";
 
-        do {
-            game.startGame();
+        while (!answer.equals("no")) {
+            if (answer.equals("yes")) {
+                game.startGame();
 
-            while (!game.isWin() && !game.isTooMuchErrors()) {
+                while (!game.isWin() && !game.isTooMuchErrors()) {
+                    game.printInfo();
+                    game.takeGuess(scanner);
+                }
+
                 game.printInfo();
-                game.takeGuess(scanner);
-            }
 
-            game.printInfo();
+                if (game.isWin()) {
+                    System.out.println("Вы угадали слово\n");
+                } else {
+                    System.out.printf("Вы не угадали слово: %s%n", game.getSecretWord());
+                }
 
-            if (game.isWin()) {
-                System.out.println("Вы угадали слово\n");
+                System.out.print("Хотите продолжить игру? [yes/no]: ");
             } else {
-                System.out.printf("Вы не угадали слово: %s%n", game.getSecretWord());
+                System.out.print("Введите корректный ответ [yes / no]: ");
             }
 
-            answer = checkAnswer(scanner);
-        } while (answer.equals("yes"));
-    }
-
-    private static String checkAnswer(Scanner scanner) {
-        String answer;
-
-        do {
-            System.out.print("Хотите продолжить игру? [yes/no]: ");
             answer = scanner.nextLine().toLowerCase();
-        } while (!answer.equals("no") && !answer.equals("yes"));
-        return answer;
+        }
     }
 }

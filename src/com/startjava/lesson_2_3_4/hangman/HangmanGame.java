@@ -58,9 +58,7 @@ public class HangmanGame {
 
     private void printHangman() {
         for (int i = 0; i < errorsCount; i++) {
-            if (i < hangmanStages.length) {
-                System.out.println(hangmanStages[i]);
-            }
+            System.out.println(hangmanStages[i]);
         }
         if (errorsCount == hangmanStages.length - 1) {
             System.out.println(hangmanStages[hangmanStages.length - 1]);
