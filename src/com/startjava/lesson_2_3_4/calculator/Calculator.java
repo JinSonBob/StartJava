@@ -11,6 +11,11 @@ public class Calculator {
     }
 
     private double calculate(int firstNum, char operator, int secondNum) {
+        if ((operator == '/' || operator == '%') && secondNum == 0) {
+            System.out.print("Ошибка: деление на ноль");
+            return Double.NaN;
+        }
+
         switch (operator) {
             case '+':
                 return firstNum + secondNum;
@@ -19,21 +24,13 @@ public class Calculator {
             case '*':
                 return firstNum * secondNum;
             case '/':
-                if (secondNum != 0) {
-                    return (double) firstNum / secondNum;
-                }
-                System.out.println("Ошибка: деление на ноль запрещено");
-                return Double.NaN;
+                return (double) firstNum / secondNum;
             case '^':
                 return Math.pow(firstNum, secondNum);
             case '%':
-                if (secondNum != 0) {
-                    return Math.floorMod(firstNum, secondNum);
-                }
-                System.out.println("Ошибка: деление по модулю на ноль");
-                return Double.NaN;
+                return Math.floorMod(firstNum, secondNum);
             default:
-                System.out.println("Ошибка: неверный оператор");
+                System.out.printf("Ошибка: операция '%c' не поддерживается%n", operator);
                 return Double.NaN;
         }
     }
