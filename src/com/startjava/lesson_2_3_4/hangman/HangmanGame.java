@@ -60,24 +60,17 @@ public class HangmanGame {
     private void printState() {
         System.out.println();
         drawGallows();
-        printGuessedLetters();
-        System.out.print("\nОшибочные буквы: ");
-        printWrongLetters();
-        System.out.printf("%nПопыток осталось: %d%n", gallows.length - errorsCount - 1);
+        System.out.printf("""
+                Отгадано: %s
+                Ошибочные буквы: %s
+                Попыткок осталось: %d
+                """, wordMask, wrongLetters, gallows.length - errorsCount - 1);
     }
 
     private void drawGallows() {
         for (int i = 0; i <= errorsCount; i++) {
             System.out.println(gallows[i]);
         }
-    }
-
-    private void printGuessedLetters() {
-        System.out.printf("Отгадано: %s", wordMask);
-    }
-
-    private void printWrongLetters() {
-        System.out.print(wrongLetters);
     }
 
     private void takeGuess(Scanner scanner) {
