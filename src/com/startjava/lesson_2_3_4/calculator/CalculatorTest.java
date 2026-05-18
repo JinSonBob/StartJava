@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class CalculatorTest {
     static void main(String[] args) {
-        Calculator calculator = new Calculator();
         Scanner scanner = new Scanner(System.in);
         String answer = "yes";
 
@@ -15,8 +14,12 @@ public class CalculatorTest {
                 System.out.print("Введите выражение из трех аргументов: ");
                 String expression = scanner.nextLine();
 
-                double result = calculator.start(expression);
-                printResult(expression, result);
+                try {
+                    double result = Calculator.start(expression);
+                    printResult(expression, result);
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
 
                 System.out.print("Хотите продолжить вычисления? [yes/no]: ");
             } else {
@@ -31,6 +34,7 @@ public class CalculatorTest {
             DecimalFormatSymbols separator = new DecimalFormatSymbols();
             separator.setDecimalSeparator(',');
             DecimalFormat resultFormat = new DecimalFormat("#.###", separator);
+            expression = expression.trim().replaceAll("\\s+", " ");
 
             System.out.printf("%s = %s%n", expression, resultFormat.format(result));
         }
