@@ -15,7 +15,7 @@ public class CalculatorTest {
                 String expression = scanner.nextLine();
 
                 try {
-                    double result = Calculator.start(expression);
+                    double result = Calculator.calculate(expression);
                     printResult(expression, result);
                 } catch (RuntimeException e) {
                     System.out.println(e.getMessage());
@@ -30,13 +30,11 @@ public class CalculatorTest {
     }
 
     private static void printResult(String expression, double result) {
-        if (!Double.isNaN(result)) {
-            DecimalFormatSymbols separator = new DecimalFormatSymbols();
-            separator.setDecimalSeparator(',');
-            DecimalFormat resultFormat = new DecimalFormat("#.###", separator);
-            expression = expression.trim().replaceAll("\\s+", " ");
+        DecimalFormatSymbols separator = new DecimalFormatSymbols();
+        separator.setDecimalSeparator(',');
+        DecimalFormat resultFormat = new DecimalFormat("#.###", separator);
+        expression = expression.trim().replaceAll("\\s+", " ");
 
-            System.out.printf("%s = %s%n", expression, resultFormat.format(result));
-        }
+        System.out.printf("%s = %s%n", expression, resultFormat.format(result));
     }
 }

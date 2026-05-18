@@ -1,16 +1,16 @@
 package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
-    private static final int EXPRESSION_LENGTH = 3;
+    private static final int EXPRESSION_PARTS_COUNT = 3;
 
     private Calculator() {}
 
-    public static double start(String expression) {
+    public static double calculate(String expression) {
         String[] expressionParts = expression.trim().replaceAll("\\s+", " ").split(" ");
 
-        if (expressionParts.length != EXPRESSION_LENGTH) {
-            throw new IllegalArgumentException("Ошибка: неверная длина выражения (" +
-                    expressionParts.length + ") вместо 3");
+        if (expressionParts.length != EXPRESSION_PARTS_COUNT) {
+            throw new IllegalArgumentException("Ошибка: выражение должно состоять из трех частей: " +
+                    "число операция число");
         }
 
         int firstNum;
@@ -30,26 +30,28 @@ public class Calculator {
         }
         char operator = operatorString.charAt(0);
 
-        return calculate(firstNum, operator, secondNum);
+        return evaluate(firstNum, operator, secondNum);
     }
 
-    private static double calculate(int firstNum, char operator, int secondNum) {
+    private static double evaluate(int firstNum, char operator, int secondNum) {
         return switch (operator) {
             case '+' -> firstNum + secondNum;
             case '-' -> firstNum - secondNum;
             case '*' -> firstNum * secondNum;
-            case '/', '%' -> {
-                if (secondNum == 0) {
-                    throw new ArithmeticException("Ошибка: деление на ноль");
-                }
-                if (operator == '/') {
-                    yield (double) firstNum / secondNum;
-                }
-                yield Math.floorMod(firstNum, secondNum);
-            }
+            case '/', '%' -> divide(firstNum, operator, secondNum);
             case '^' -> Math.pow(firstNum, secondNum);
             default -> throw new UnsupportedOperationException("Ошибка: операция '" +
                     operator + "' не поддерживается");
         };
+    }
+
+    private static double divide(int firstNum, char operator, int secondNum) {
+        if (secondNum == 0) {
+            throw new ArithmeticException("Ошибка: деление на ноль");
+        }
+        if (operator == '/') {
+            return (double) firstNum / secondNum;
+        }
+        return Math.floorMod(firstNum, secondNum);
     }
 }
