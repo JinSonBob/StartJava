@@ -11,25 +11,18 @@ public class GuessNumberTest {
 
         System.out.print("Введите имя второго игрока: ");
         Player secondPlayer = new Player(scanner.nextLine());
-        
+
         String answer = "yes";
+        while (!answer.equals("no")) {
+            if (answer.equals("yes")) {
+                GuessNumber game = new GuessNumber(firstPlayer, secondPlayer);
+                game.start();
 
-        while (answer.equals("yes")) {
-            GuessNumber game = new GuessNumber(firstPlayer, secondPlayer);
-            game.start();
-
-            answer = checkAnswer(scanner);
+                System.out.print("Хотите продолжить вычисления? [yes/no]: ");
+            } else {
+                System.out.print("Введите корректный ответ [yes / no]: ");
+            }
+            answer = scanner.nextLine().toLowerCase();
         }
-    }
-
-    private static String checkAnswer(Scanner scanner) {
-        String answer;
-        
-        do {
-            System.out.print("Хотите продолжить игру? [yes/no]: ");
-            answer = scanner.next();
-        } while (!answer.equals("no") && !answer.equals("yes"));
-
-        return answer;
     }
 }
