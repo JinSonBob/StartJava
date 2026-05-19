@@ -10,6 +10,7 @@ public class Player {
     private String name;
     private int[] nums = new int[MAX_ATTEMPTS];
     private int attemptsCount;
+    private int winsCount;
 
     public Player(String name) {
         this.name = name;
@@ -32,7 +33,19 @@ public class Player {
         return Arrays.copyOf(nums, attemptsCount);
     }
 
-    public void clear() {
+    public void addWin() {
+        winsCount++;
+    }
+
+    public int getWinsCount() {
+        return winsCount;
+    }
+
+    public void clearWins() {
+        winsCount = 0;
+    }
+
+    public void clearAttempts() {
         Arrays.fill(nums, 0, attemptsCount, 0);
         attemptsCount = 0;
     }
