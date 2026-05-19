@@ -30,10 +30,10 @@ public class GuessNumber {
         int round = 1;
         while (round <= MAX_ATTEMPTS) {
             System.out.println("\nПопытка: " + round);
-            int attemptNumber = inputNum(scanner, currPlayer);
+            int attemptNum = inputNum(scanner, currPlayer);
 
-            if (checkWinNum(attemptNumber)) {
-                printResults(currPlayer, round);
+            if (isGuessed(attemptNum)) {
+                printGameSummary(currPlayer, round);
                 break;
             }
 
@@ -50,16 +50,16 @@ public class GuessNumber {
         System.out.printf("Число вводит %s: ", currPlayer.getName());
         while (true) {
             try {
-                int number = scanner.nextInt();
-                currPlayer.addNum(number);
-                return number;
+                int num = scanner.nextInt();
+                currPlayer.addNum(num);
+                return num;
             } catch (IllegalArgumentException e) {
-                System.out.print(e.getMessage() + " ");
+                System.out.print(e.getMessage());
             }
         }
     }
 
-    private boolean checkWinNum(int playerNum) {
+    private boolean isGuessed(int playerNum) {
         if (playerNum == hiddenNum) {
             return true;
         }
@@ -69,7 +69,7 @@ public class GuessNumber {
         return false;
     }
 
-    private void printResults(Player winner, int attempt) {
+    private void printGameSummary(Player winner, int attempt) {
         System.out.printf("""
                 %n%s угадал число %d с %d попытки
                 Числа %s: %s
