@@ -18,36 +18,31 @@ public class GuessNumber {
     }
 
     public void start() throws InterruptedException {
-        choosePlayerOrder();
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
+
+        shufflePlayers();
         for (Player player : players) player.clearWins();
 
         for (int round = 1; round <= MAX_ROUNDS; round++) {
-            hiddenNum = new Random().nextInt(MIN_HIDDEN_NUM, MAX_HIDDEN_NUM + 1);
+            generateHiddenNum(random);
             for (Player player : players) player.clearAttempts();
 
-            System.out.println("\nРаунд " + round);
-            System.out.println("(Подсказка " + hiddenNum + ")");
-            System.out.println("Раунд начался! У каждого игрока по " + MAX_ATTEMPTS + " попыток");
+            printRoundInfo(round, hiddenNum, MAX_ATTEMPTS);
 
-            Scanner scanner = new Scanner(System.in);
             boolean isRoundWon = false;
 
             for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
                 for (Player currPlayer : players) {
                     System.out.println("\nПопытка: " + attempt);
-                    int attemptNum = inputNum(scanner, currPlayer);
+                    int playerNum = inputNum(scanner, currPlayer);
 
-                    if (isGuessed(attemptNum)) {
-                        System.out.printf("%n%s угадал число %d с %d попытки",
-                                currPlayer.getName(), hiddenNum, attempt);
-                        currPlayer.addWin();
+                    if (isGuessed(currPlayer, playerNum, attempt)) {
                         isRoundWon = true;
                         break;
                     }
 
-                    if (attempt == MAX_ATTEMPTS) {
-                        System.out.printf("У %s закончились попытки!%n", currPlayer.getName());
-                    }
+                    checkRemainingAttempts(currPlayer, attempt);
                 }
                 if (isRoundWon) break;
             }
@@ -56,7 +51,7 @@ public class GuessNumber {
         printGameSummary();
     }
 
-    private void choosePlayerOrder() throws InterruptedException {
+    private void shufflePlayers() throws InterruptedException {
         for (int i = players.length - 1; i > 0; i--) {
             int j = new Random().nextInt(i + 1);
             Player tmpPlayer = players[i];
@@ -89,6 +84,18 @@ public class GuessNumber {
         System.out.print("\r\r");
     }
 
+    private void generateHiddenNum(Random random) {
+        hiddenNum = random.nextInt(MIN_HIDDEN_NUM, MAX_HIDDEN_NUM + 1);
+    }
+
+    private static void printRoundInfo(int round, int hiddenNum, int attempts) {
+        System.out.printf("""
+                    %nРаунд %d
+                    Подсказка: %d
+                    Раунд начался! У каждого игрока по %d попыток
+                    """, round, hiddenNum, attempts);
+    }
+
     private int inputNum(Scanner scanner, Player currPlayer) {
         System.out.printf("Число вводит %s: ", currPlayer.getName());
         while (true) {
@@ -102,8 +109,11 @@ public class GuessNumber {
         }
     }
 
-    private boolean isGuessed(int playerNum) {
+    private boolean isGuessed(Player currPlayer, int playerNum, int attempt) {
         if (playerNum == hiddenNum) {
+            System.out.printf("%n%s угадал число %d с %d попытки%n",
+                    currPlayer.getName(), hiddenNum, attempt);
+            currPlayer.incrementWins();
             return true;
         }
         System.out.printf("%d %s того, что загадал компьютер%n",
@@ -117,6 +127,12 @@ public class GuessNumber {
         for (Player player : players) {
             System.out.printf("Числа %s: %s%n",
                     player.getName(), Arrays.toString(player.getNums()));
+        }
+    }
+
+    private void checkRemainingAttempts(Player currPlayer, int attempt){
+        if (attempt == MAX_ATTEMPTS) {
+            System.out.printf("У %s закончились попытки!%n", currPlayer.getName());
         }
     }
 

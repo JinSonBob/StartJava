@@ -3,14 +3,12 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Scanner;
 
 public class GuessNumberTest {
+    private static final int PLAYERS_NUM = 3;
+
     public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        Player[] players = new Player[3];
 
-        for (int i = 1; i < 4; i++) {
-            System.out.print("Введите имя " + i + " игрока: ");
-            players[i - 1] = new Player(scanner.nextLine());
-        }
+        Player[] players = createPlayers(scanner);
 
         String answer = "yes";
         while (!answer.equals("no")) {
@@ -24,5 +22,14 @@ public class GuessNumberTest {
             }
             answer = scanner.nextLine().toLowerCase();
         }
+    }
+
+    private static Player[] createPlayers(Scanner scanner) {
+        Player[] players = new Player[PLAYERS_NUM];
+        for (int i = 1; i <= PLAYERS_NUM; i++) {
+            System.out.print("Введите имя " + i + " игрока: ");
+            players[i - 1] = new Player(scanner.nextLine());
+        }
+        return players;
     }
 }

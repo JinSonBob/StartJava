@@ -8,12 +8,13 @@ import java.util.Arrays;
 
 public class Player {
     private String name;
-    private int[] nums = new int[MAX_ATTEMPTS];
+    private int[] nums;
     private int attemptsCount;
     private int winsCount;
 
     public Player(String name) {
         this.name = name;
+        this.nums = new int[MAX_ATTEMPTS];
     }
     
     public String getName() {
@@ -33,7 +34,7 @@ public class Player {
         return Arrays.copyOf(nums, attemptsCount);
     }
 
-    public void addWin() {
+    public void incrementWins() {
         winsCount++;
     }
 
