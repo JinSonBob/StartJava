@@ -1,40 +1,33 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
-import static com.startjava.lesson_2_3_4.bookshelf.BookshelfTest.MAX_BOOKS;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class Bookshelf {
+    public static final int CAPACITY = 10;
+    private final Book[] books = new Book[CAPACITY];
     private int booksNum;
-    private Book[] books = new Book[MAX_BOOKS];
 
     public void addBook(Book book) {
-        if (booksNum == MAX_BOOKS) {
+        if (booksNum >= CAPACITY) {
             throw new ArrayIndexOutOfBoundsException("Ошибка: в шкафу закончилось место");
         }
         books[booksNum++] = book;
     }
 
-    public Book[] getAllBooks() {
-        return Arrays.copyOf(books, booksNum);
-    }
-
-    public int getBooksNum() {
-        return booksNum;
-    }
-
-    public int getFreeShelvesNum() {
-        return MAX_BOOKS - booksNum;
-    }
-
-    public Book getBook(String targetTitle) {
+    public Book findBook(String targetTitle) {
         int bookIndex = findBookIndex(targetTitle);
+        if (bookIndex == -1) {
+            throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
+        }
         return books[bookIndex];
     }
 
     public void removeBook(String targetTitle) {
         int bookIndex = findBookIndex(targetTitle);
+        if (bookIndex == -1) {
+            throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
+        }
 
         int moveBooksNum = booksNum - bookIndex - 1;
         if (moveBooksNum > 0) {
@@ -49,7 +42,19 @@ public class Bookshelf {
                 return i;
             }
         }
-        throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
+        return -1;
+    }
+
+    public int getBooksNum() {
+        return booksNum;
+    }
+
+    public Book[] getAllBooks() {
+        return Arrays.copyOf(books, booksNum);
+    }
+
+    public int getFreeShelvesNum() {
+        return CAPACITY - booksNum;
     }
 
     public void clearBookShelf() {
