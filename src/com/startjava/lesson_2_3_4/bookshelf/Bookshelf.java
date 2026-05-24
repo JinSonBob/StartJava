@@ -9,13 +9,20 @@ public class Bookshelf {
     private int booksNum;
 
     public void addBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Ошибка: передана пустая ссылка на книгу");
+        }
         if (booksNum >= CAPACITY) {
-            throw new ArrayIndexOutOfBoundsException("Ошибка: в шкафу закончилось место");
+            throw new FullShelfException("Ошибка: в шкафу закончилось место");
         }
         books[booksNum++] = book;
     }
 
     public Book findBook(String targetTitle) {
+        if (targetTitle == null || targetTitle.isBlank()) {
+            throw new IllegalArgumentException("Ошибка: передано пустое название книги");
+        }
+
         int bookIndex = findBookIndex(targetTitle);
         if (bookIndex == -1) {
             throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
@@ -24,6 +31,10 @@ public class Bookshelf {
     }
 
     public void removeBook(String targetTitle) {
+        if (targetTitle == null || targetTitle.isBlank()) {
+            throw new IllegalArgumentException("Ошибка: передано пустое название книги");
+        }
+
         int bookIndex = findBookIndex(targetTitle);
         if (bookIndex == -1) {
             throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
@@ -57,7 +68,7 @@ public class Bookshelf {
         return CAPACITY - booksNum;
     }
 
-    public void clearBookShelf() {
+    public void clear() {
         Arrays.fill(books, 0, booksNum, null);
         booksNum = 0;
     }

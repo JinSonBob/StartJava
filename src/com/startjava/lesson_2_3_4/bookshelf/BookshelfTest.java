@@ -1,6 +1,6 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
-import static com.startjava.lesson_2_3_4.bookshelf.Book.MIN_PUBLISHING_YEAR;
+import static com.startjava.lesson_2_3_4.bookshelf.Book.MIN_PUBLISHED_YEAR;
 import static com.startjava.lesson_2_3_4.bookshelf.Bookshelf.CAPACITY;
 
 import java.time.Year;
@@ -8,7 +8,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class BookshelfTest {
-    public static final int CURR_YEAR = Year.now().getValue();
+    private static int maxBookLen = 0;
+    private static boolean isShelfChanged = true;
 
     static void main() throws InterruptedException {
         printGreeting();
@@ -26,7 +27,7 @@ public class BookshelfTest {
                 int choice = Integer.parseInt(input);
                 isRunning = chooseOption(choice, bookshelf, scanner);
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка: значение должго быть целым числом");
+                System.out.println("Ошибка: значение должно быть целым числом");
                 waitEnter();
             }
         }
@@ -51,15 +52,19 @@ public class BookshelfTest {
         System.out.printf("В шкафу книг - %d, свободных полок - %d%n",
                 booksNum, freeShelvesNum);
 
-        int maxBookLen = 0;
         Book[] allBooks = bookshelf.getAllBooks();
-        for (Book book : allBooks) {
-            int currBookLen = book.toString().length();
-            if (currBookLen > maxBookLen) maxBookLen = currBookLen;
+
+        if (isShelfChanged) {
+            maxBookLen = 0;
+            for (Book book : allBooks) {
+                int currBookLen = book.toString().length();
+                if (currBookLen > maxBookLen) maxBookLen = currBookLen;
+            }
+            isShelfChanged = false;
         }
 
-        for (int i = 0; i < booksNum; i++) {
-            System.out.printf("|%-" + maxBookLen + "s|%n", allBooks[i].toString());
+        for (Book book : allBooks) {
+            System.out.printf("|%-" + maxBookLen + "s|%n", book.toString());
             System.out.println("|" + "-".repeat(maxBookLen) + "|");
         }
         System.out.println();
@@ -100,20 +105,22 @@ public class BookshelfTest {
             return;
         }
         try {
-            String author = nonEmptyInput(scanner, "автор");
-            String title = nonEmptyInput(scanner, "название");
-            int year = readYear(scanner);
+            String author = inputBookProperty(scanner, "автор");
+            String title = inputBookProperty(scanner, "название");
+            int year = inputYear(scanner);
 
             Book book = new Book(author, title, year);
             bookshelf.addBook(book);
             System.out.println("Книга успешно добавлена");
-        } catch (Exception e) {
+
+            isShelfChanged = true;
+        } catch (IllegalArgumentException | FullShelfException e) {
             System.out.println(e.getMessage());
         }
         waitEnter();
     }
 
-    private static String nonEmptyInput(Scanner scanner, String bookProperty) {
+    private static String inputBookProperty(Scanner scanner, String bookProperty) {
         while (true) {
             System.out.printf("Введите %s книги: ", bookProperty);
             String input = scanner.nextLine().trim();
@@ -126,7 +133,7 @@ public class BookshelfTest {
     }
 
     private static void findBook(Bookshelf bookshelf, Scanner scanner) {
-        String title = nonEmptyInput(scanner, "название");
+        String title = inputBookProperty(scanner, "название");
         try {
             Book book = bookshelf.findBook(title);
             System.out.println("Найдена книга: " + book.toString());
@@ -136,15 +143,16 @@ public class BookshelfTest {
         waitEnter();
     }
 
-    private static int readYear(Scanner scanner) {
+    private static int inputYear(Scanner scanner) {
         while (true) {
             System.out.print("Введите год издания: ");
             String input = scanner.nextLine().trim();
             try {
                 int year = Integer.parseInt(input);
-                if (year < MIN_PUBLISHING_YEAR || year > CURR_YEAR) {
+                int currYear = Year.now().getValue();
+                if (year < MIN_PUBLISHED_YEAR || year > currYear) {
                     System.out.printf("Ошибка: год издания должен быть между %d и %d%n",
-                            MIN_PUBLISHING_YEAR, CURR_YEAR);
+                            MIN_PUBLISHED_YEAR, currYear);
                     continue;
                 }
                 return year;
@@ -155,19 +163,21 @@ public class BookshelfTest {
     }
 
     private static void removeBook(Bookshelf bookshelf, Scanner scanner) {
-        String title = nonEmptyInput(scanner, "название");
+        String title = inputBookProperty(scanner, "название");
         try {
             bookshelf.removeBook(title);
             System.out.println("Книга успешно удалена");
-        } catch (NoSuchElementException e) {
+            isShelfChanged = true;
+        } catch (NoSuchElementException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
         waitEnter();
     }
 
     private static void clearBookshelf(Bookshelf bookshelf) {
-        bookshelf.clearBookShelf();
+        bookshelf.clear();
         System.out.println("Шкаф очищен от всех книг");
+        isShelfChanged = true;
         waitEnter();
     }
 

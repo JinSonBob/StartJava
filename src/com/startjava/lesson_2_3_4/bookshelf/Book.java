@@ -1,30 +1,29 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
-import static com.startjava.lesson_2_3_4.bookshelf.BookshelfTest.CURR_YEAR;
-
 import java.time.Year;
 
 public class Book {
-    public static final int MIN_PUBLISHING_YEAR = 1800;
+    public static final int MIN_PUBLISHED_YEAR = 1800;
 
     private final String author;
     private final String title;
-    private final Year publishingYear;
+    private final Year publishedYear;
 
-    public Book(String author, String title, int publishingYear) {
+    public Book(String author, String title, int publishedYear) {
         if (author == null || author.isBlank()) {
             throw new IllegalArgumentException("Ошибка: не указан автор книги");
         }
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Ошибка: не указано название книги");
         }
-        if (publishingYear < MIN_PUBLISHING_YEAR || publishingYear > CURR_YEAR) {
+        int currYear = Year.now().getValue();
+        if (publishedYear < MIN_PUBLISHED_YEAR || publishedYear > currYear) {
             throw new IllegalArgumentException("Ошибка: год издания должен быть между " +
-                    MIN_PUBLISHING_YEAR + " и " + CURR_YEAR);
+                    MIN_PUBLISHED_YEAR + " и " + currYear);
         }
         this.author = author.trim();
         this.title = title.trim();
-        this.publishingYear = Year.of(publishingYear);
+        this.publishedYear = Year.of(publishedYear);
     }
 
     public String getAuthor() {
@@ -35,12 +34,12 @@ public class Book {
         return title;
     }
 
-    public Year getPublishingYear() {
-        return publishingYear;
+    public Year getPublishedYear() {
+        return publishedYear;
     }
 
     @Override
     public String toString() {
-        return author + ", " + title + ", " + publishingYear;
+        return author + ", " + title + ", " + publishedYear;
     }
 }
