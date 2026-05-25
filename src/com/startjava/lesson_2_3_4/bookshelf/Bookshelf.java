@@ -1,7 +1,8 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
+import com.startjava.lesson_2_3_4.exception.EmptyShelfException;
+import com.startjava.lesson_2_3_4.exception.FullShelfException;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public class Bookshelf {
     public static final int CAPACITY = 10;
@@ -18,42 +19,46 @@ public class Bookshelf {
         books[booksNum++] = book;
     }
 
-    public Book findBook(String targetTitle) {
+    public Book[] findBook(String targetTitle) {
         if (targetTitle == null || targetTitle.isBlank()) {
             throw new IllegalArgumentException("Ошибка: передано пустое название книги");
         }
 
-        int bookIndex = findBookIndex(targetTitle);
-        if (bookIndex == -1) {
-            throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
-        }
-        return books[bookIndex];
-    }
+        Book[] foundBooks = new Book[3];
+        int booksCount = 0;
 
-    public void removeBook(String targetTitle) {
-        if (targetTitle == null || targetTitle.isBlank()) {
-            throw new IllegalArgumentException("Ошибка: передано пустое название книги");
-        }
-
-        int bookIndex = findBookIndex(targetTitle);
-        if (bookIndex == -1) {
-            throw new NoSuchElementException(String.format("Ошибка: книга %s не найдена", targetTitle));
-        }
-
-        int moveBooksNum = booksNum - bookIndex - 1;
-        if (moveBooksNum > 0) {
-            System.arraycopy(books, bookIndex + 1, books, bookIndex, moveBooksNum);
-        }
-        books[--booksNum] = null;
-    }
-
-    private int findBookIndex(String targetTitle) {
         for (int i = 0; i < booksNum; i++) {
             if (books[i].getTitle().equals(targetTitle)) {
-                return i;
+                if (booksCount == foundBooks.length) {
+                    foundBooks = Arrays.copyOf(foundBooks, (int) (foundBooks.length * 1.5));
+                }
+                foundBooks[booksCount++] = books[i];
             }
         }
-        return -1;
+        return Arrays.copyOf(foundBooks, booksCount);
+    }
+
+    public int removeBook(String targetTitle) {
+        if (targetTitle == null || targetTitle.isBlank()) {
+            throw new IllegalArgumentException("Ошибка: передано пустое название книги");
+        }
+        if (booksNum == 0) {
+            throw new EmptyShelfException("Ошибка: в шкафу нету книг");
+        }
+
+        int booksCount = 0;
+        for (int i = 0; i < booksNum; i++) {
+            if (books[i].getTitle().equals(targetTitle)) {
+                int moveBooksNum = booksNum - i - 1;
+                if (moveBooksNum > 0) {
+                    System.arraycopy(books, i + 1, books, i, moveBooksNum);
+                }
+                books[--booksNum] = null;
+                booksCount++;
+                i--;
+            }
+        }
+        return booksCount;
     }
 
     public int getBooksNum() {
