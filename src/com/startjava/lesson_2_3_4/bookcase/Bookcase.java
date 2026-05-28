@@ -1,30 +1,41 @@
-package com.startjava.lesson_2_3_4.bookshelf;
+package com.startjava.lesson_2_3_4.bookcase;
 
-import com.startjava.lesson_2_3_4.exception.EmptyShelfException;
-import com.startjava.lesson_2_3_4.exception.FullShelfException;
+import com.startjava.lesson_2_3_4.bookcase.exception.EmptyBookcaseException;
+import com.startjava.lesson_2_3_4.bookcase.exception.FullBookcaseException;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class Bookshelf {
-    public static final int CAPACITY = 10;
+public class Bookcase {
+    private static final int CAPACITY = 10;
+    private static final int STARTING_FOUND_BOOKS_LEN = 3;
     private final Book[] books = new Book[CAPACITY];
     private int booksNum;
+    private int maxBookLen;
 
     public void addBook(Book book) {
-        if (book == null) {
-            throw new IllegalArgumentException("Ошибка: передана пустая ссылка на книгу");
-        }
-        if (booksNum >= CAPACITY) {
-            throw new FullShelfException("Ошибка: в шкафу закончилось место");
+        Objects.requireNonNull(book, "Ошибка: книга не может быть null");
+        if (isFull()) {
+            throw new FullBookcaseException("Ошибка: кинга не сохранена. В шкафу закончилось место");
         }
         books[booksNum++] = book;
+
+        int currBookLen = book.toString().length();
+        if (currBookLen > maxBookLen) {
+            maxBookLen = currBookLen;
+        }
+    }
+
+    public boolean isFull() {
+        return booksNum >= CAPACITY;
     }
 
     public Book[] findBook(String targetTitle) {
-        if (targetTitle == null || targetTitle.isBlank()) {
+        Objects.requireNonNull(targetTitle, "Ошибка: название книги не может быть null");
+        if (targetTitle.isBlank()) {
             throw new IllegalArgumentException("Ошибка: передано пустое название книги");
         }
 
-        Book[] foundBooks = new Book[3];
+        Book[] foundBooks = new Book[STARTING_FOUND_BOOKS_LEN];
         int booksCount = 0;
 
         for (int i = 0; i < booksNum; i++) {
@@ -39,11 +50,12 @@ public class Bookshelf {
     }
 
     public int removeBook(String targetTitle) {
-        if (targetTitle == null || targetTitle.isBlank()) {
+        Objects.requireNonNull(targetTitle, "Ошибка: название книги не может быть null");
+        if (targetTitle.isBlank()) {
             throw new IllegalArgumentException("Ошибка: передано пустое название книги");
         }
         if (booksNum == 0) {
-            throw new EmptyShelfException("Ошибка: в шкафу нету книг");
+            throw new EmptyBookcaseException("Ошибка: в шкафу нету книг");
         }
 
         int booksCount = 0;
@@ -58,6 +70,11 @@ public class Bookshelf {
                 i--;
             }
         }
+
+        if (booksCount > 0) {
+            calculateMaxBookLen();
+        }
+
         return booksCount;
     }
 
@@ -71,6 +88,20 @@ public class Bookshelf {
 
     public int getFreeShelvesNum() {
         return CAPACITY - booksNum;
+    }
+
+    public int getMaxBookLen() {
+        return maxBookLen;
+    }
+
+    public void calculateMaxBookLen() {
+        maxBookLen = 0;
+        for (int i = 0; i < booksNum; i++) {
+            int currLen = books[i].toString().length();
+            if (currLen > maxBookLen) {
+                maxBookLen = currLen;
+            }
+        }
     }
 
     public void clear() {

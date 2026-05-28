@@ -1,6 +1,7 @@
-package com.startjava.lesson_2_3_4.bookshelf;
+package com.startjava.lesson_2_3_4.bookcase;
 
 import java.time.Year;
+import java.util.Objects;
 
 public class Book {
     public static final int MIN_PUBLISHED_YEAR = 1800;
@@ -10,17 +11,22 @@ public class Book {
     private final Year publishedYear;
 
     public Book(String author, String title, int publishedYear) {
-        if (author == null || author.isBlank()) {
+        Objects.requireNonNull(author, "Ошибка: автор книги не может быть null");
+        if (author.isBlank()) {
             throw new IllegalArgumentException("Ошибка: не указан автор книги");
         }
-        if (title == null || title.isBlank()) {
+
+        Objects.requireNonNull(title, "Ошибка: название книги не может быть null");
+        if (title.isBlank()) {
             throw new IllegalArgumentException("Ошибка: не указано название книги");
         }
+
         int currYear = Year.now().getValue();
         if (publishedYear < MIN_PUBLISHED_YEAR || publishedYear > currYear) {
             throw new IllegalArgumentException("Ошибка: год издания должен быть между " +
                     MIN_PUBLISHED_YEAR + " и " + currYear);
         }
+
         this.author = author.trim();
         this.title = title.trim();
         this.publishedYear = Year.of(publishedYear);
