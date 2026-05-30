@@ -10,7 +10,7 @@ public class Bookcase {
     private static final int STARTING_FOUND_BOOKS_LEN = 3;
     private final Book[] books = new Book[CAPACITY];
     private int booksNum;
-    private int maxBookLen;
+    private int shelfLen;
 
     public void addBook(Book book) {
         Objects.requireNonNull(book, "Ошибка: книга не может быть null");
@@ -20,9 +20,7 @@ public class Bookcase {
         books[booksNum++] = book;
 
         int currBookLen = book.toString().length();
-        if (currBookLen > maxBookLen) {
-            maxBookLen = currBookLen;
-        }
+        shelfLen = Math.max(currBookLen, shelfLen);
     }
 
     public boolean isFull() {
@@ -59,8 +57,13 @@ public class Bookcase {
         }
 
         int booksCount = 0;
+        boolean isShelfLenChanged = false;
         for (int i = 0; i < booksNum; i++) {
             if (books[i].getTitle().equals(targetTitle)) {
+                if (books[i].toString().length() == shelfLen) {
+                    isShelfLenChanged = true;
+                }
+
                 int moveBooksNum = booksNum - i - 1;
                 if (moveBooksNum > 0) {
                     System.arraycopy(books, i + 1, books, i, moveBooksNum);
@@ -71,7 +74,7 @@ public class Bookcase {
             }
         }
 
-        if (booksCount > 0) {
+        if (isShelfLenChanged) {
             calculateMaxBookLen();
         }
 
@@ -90,17 +93,15 @@ public class Bookcase {
         return CAPACITY - booksNum;
     }
 
-    public int getMaxBookLen() {
-        return maxBookLen;
+    public int getShelfLen() {
+        return shelfLen;
     }
 
-    public void calculateMaxBookLen() {
-        maxBookLen = 0;
+    private void calculateMaxBookLen() {
+        shelfLen = 0;
         for (int i = 0; i < booksNum; i++) {
-            int currLen = books[i].toString().length();
-            if (currLen > maxBookLen) {
-                maxBookLen = currLen;
-            }
+            int currBookLen = books[i].toString().length();
+            shelfLen = Math.max(currBookLen, shelfLen);
         }
     }
 

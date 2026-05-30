@@ -19,13 +19,13 @@ public enum Menu {
         return option;
     }
 
-    public static Menu getChoice(int choice, Menu[] currMenu) {
-        if (choice < 1 || choice > currMenu.length) {
+    public static Menu getChoice(int menuNum, Menu[] currMenuItems) {
+        if (menuNum < 1 || menuNum > currMenuItems.length) {
             throw new InvalidMenuOptionException(
                     String.format("Ошибка: неверное значение меню (%d). Допустимые значения: 1-%d",
-                            choice, currMenu.length)
+                            menuNum, currMenuItems.length)
             );
         }
-        return currMenu[choice - 1];
+        return currMenuItems[menuNum - 1];
     }
 }

@@ -18,15 +18,17 @@ public class BookcaseTest {
         while (isRunning) {
             printBookshelf(bookcase);
 
-            Menu[] currMenu = getMenuOptions(bookcase);
-            printMenu(currMenu);
+            Menu[] currMenuItems = getMenuOptions(bookcase);
+            printMenu(currMenuItems);
 
             System.out.print("Выберите пункт меню: ");
-            String input = scanner.nextLine().trim();
+            String input;
+
+            while ((input = scanner.nextLine().trim()).isEmpty()) {}
 
             try {
-                int choice = Integer.parseInt(input);
-                Menu selectedOption = Menu.getChoice(choice, currMenu);
+                int menuNum = Integer.parseInt(input);
+                Menu selectedOption = Menu.getChoice(menuNum, currMenuItems);
                 isRunning = chooseOption(selectedOption, bookcase, scanner);
             } catch (InvalidMenuOptionException e) {
                 System.out.println(e.getMessage());
@@ -58,12 +60,11 @@ public class BookcaseTest {
                 booksNum, freeShelvesNum);
 
         Book[] allBooks = bookcase.getAllBooks();
-
-        int maxBookLen = bookcase.getMaxBookLen();
+        int shelfLen = bookcase.getShelfLen();
 
         for (Book book : allBooks) {
-            System.out.printf("|%-" + maxBookLen + "s|%n", book.toString());
-            System.out.println("|" + "-".repeat(maxBookLen) + "|");
+            System.out.printf("|%-" + shelfLen + "s|%n", book);
+            System.out.println("|" + "-".repeat(shelfLen) + "|");
         }
         System.out.println();
     }
@@ -78,14 +79,14 @@ public class BookcaseTest {
         return Menu.values();
     }
 
-    private static void printMenu(Menu[] currMenu) {
-        for (int i = 0; i < currMenu.length; i++) {
-            System.out.printf("%d. %s%n", i + 1, currMenu[i].getOption());
+    private static void printMenu(Menu[] currMenuItems) {
+        for (int i = 0; i < currMenuItems.length; i++) {
+            System.out.printf("%d. %s%n", i + 1, currMenuItems[i].getOption());
         }
     }
 
-    private static boolean chooseOption(Menu choice, Bookcase bookcase, Scanner scanner) {
-        switch (choice) {
+    private static boolean chooseOption(Menu menuNum, Bookcase bookcase, Scanner scanner) {
+        switch (menuNum) {
             case ADD -> addBook(bookcase, scanner);
             case FIND -> findBook(bookcase, scanner);
             case REMOVE -> removeBook(bookcase, scanner);
@@ -122,7 +123,9 @@ public class BookcaseTest {
     private static int inputYear(Scanner scanner) {
         while (true) {
             System.out.print("Введите год издания: ");
-            String input = scanner.nextLine().trim();
+            String input;
+
+            while ((input = scanner.nextLine().trim()).isEmpty()) {}
             try {
                 int year = Integer.parseInt(input);
                 int currYear = Year.now().getValue();
@@ -143,9 +146,9 @@ public class BookcaseTest {
         try {
             Book[] foundBooks = bookcase.findBook(title);
             if (foundBooks.length > 0) {
-                System.out.println("Найдены книги");
+                System.out.println("Найденные книги:");
                 for (Book book : foundBooks) {
-                    System.out.println(book.toString());
+                    System.out.println(book);
                 }
             } else {
                 System.out.printf("Книга \"%s\" не найдена%n", title);
@@ -172,15 +175,11 @@ public class BookcaseTest {
     }
 
     private static String inputBookProperty(Scanner scanner, String bookProperty) {
-        while (true) {
-            System.out.printf("Введите %s книги: ", bookProperty);
-            String input = scanner.nextLine().trim();
-            if (!input.isEmpty()) {
-                return input;
-            }
-            System.out.printf("Ошибка: не %s %s книги%n",
-                    bookProperty.equals("название") ? "указано" : "указан", bookProperty);
-        }
+        System.out.printf("Введите %s книги: ", bookProperty);
+        String input;
+
+        while ((input = scanner.nextLine().trim()).isEmpty()) {}
+        return input;
     }
 
     private static void clear(Bookcase bookcase, Scanner scanner) {
@@ -191,6 +190,6 @@ public class BookcaseTest {
 
     private static void waitEnter(Scanner scanner) {
         System.out.println("\nДля продолжения работы нажмите клавишу <Enter>");
-        scanner.nextLine();
+        while (!scanner.nextLine().isEmpty()) {}
     }
 }
