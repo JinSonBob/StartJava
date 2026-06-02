@@ -6,11 +6,11 @@ CREATE TABLE jaegers (
     id         SERIAL PRIMARY KEY,
     model_name TEXT,
     mark       TEXT,
-    height     INTEGER,
-    weight     INTEGER,
+    height     FLOAT,
+    weight     FLOAT,
     status     TEXT,
     origin     TEXT,
-    LAUNCH     DATE,
+    launch     DATE,
     kaiju_kill INTEGER
 );
 

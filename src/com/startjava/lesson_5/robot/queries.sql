@@ -29,19 +29,19 @@ SELECT *
           FROM jaegers)
 ORDER BY model_name;
 
-\echo 'Display model_name, mark, launch, and kaiju_kill for jaegers with kills above average'
+\echo 'Display model_name, mark, launch, and kaiju_kill for jaegers with most kaiju_kill'
 SELECT model_name,
        mark,
        launch,
        kaiju_kill
   FROM jaegers
- WHERE kaiju_kill >=
-       (SELECT AVG(kaiju_kill)
+ WHERE kaiju_kill =
+       (SELECT MAX(kaiju_kill)
           FROM jaegers)
 ORDER BY model_name;
 
 \echo 'Display the average weight of jaegers rounded to 3 decimal'
-SELECT ROUND(AVG(weight), 3) AS avg_weight
+SELECT ROUND(CAST(AVG(weight) AS NUMERIC), 3) AS avg_weight
   FROM jaegers;
 
 \echo 'Increment kaiju_kill by 1 for non-destroyed jaegers and display the table'
